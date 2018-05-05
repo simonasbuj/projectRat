@@ -1,0 +1,337 @@
+/*@import "https://maxcdn.bootstrapcdn.com/font-awesome/5.0.10/css/font-awesome.min.css";*/
+
+body{
+	background-color: #f5f5f5;
+}
+
+/*#menu-toggle{
+	position: fixed;
+
+}*/
+
+
+.no-radius{
+	border-radius: 0px;
+}
+.border-black {border-color: black !important;}
+.pointer {cursor: pointer;}
+
+.btn-login{
+	color: white;
+	background-color: black;
+	border-color: white;
+}
+.btn-login:hover{	
+	color: black;
+	background-color: white;
+	border-color: white;	
+}
+
+
+#menu-icon{
+	color: white;
+}
+
+#search-btn{
+	color: white;
+	border-color: white;
+}
+
+#search-btn:hover{
+	color: black;
+	border-color: black;
+	background-color: white;
+}
+
+#search-btn:focus{
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.075) inset, 0 0 18px rgba(140, 140, 140, 1);
+}
+
+
+#searchnavbarleft{ 
+	padding-left:20px;
+}
+
+#profiletopright a{
+	color: white;
+}
+
+#profiletopright a:hover{
+	text-decoration: none;
+}
+
+/* smaller than 600px */
+@media only screen and (max-width: 600px) {
+    /*#profiletopright{ 
+        display: none;
+    }*/
+	.navbar-brand{
+		display: none;
+	}
+}
+
+/* bigger than 600px */
+@media only screen and (min-width: 10px) {
+    #profilesidebar{ 
+        display: none;
+    }
+}
+
+/*overide bootstrap */
+.form-control{
+		border-radius: 0px;
+}
+
+.badge-dark{
+	background: #000 !important;
+}
+
+.bg-dark{
+		background: #000 !important;
+}
+
+/* dropdown menu*/
+
+.dropdown-menu{
+	width: 220px !important;
+	/*background-color: red;*/	
+}
+
+.dropdown-divider{
+	/*border-color: red;*/
+}
+
+.dropdown-item:focus{
+	background-color: #f8f9fb;
+}
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+/* cards */
+.card{
+
+}
+
+.bg-mycardbg{
+	background-color: #32383E;
+	
+}
+
+.book{
+	border: none;
+}
+
+/*.book .card-footer{
+	border-top: 5px solid red;
+}*/
+
+
+.book .card-title a:hover,
+.book .card-subtitle a:hover,
+.book .card-text a:hover{
+	text-decoration: underline;
+}
+.book a{
+	color: white;	
+}
+
+.book a:hover{
+	text-decoration: none;	
+}
+
+/* no need because all images are the same size in python code on upload
+.book img{
+	 min-height: 150px !important;
+	 max-height: 550px;
+}
+
+@media only screen and (max-width: 990px) {
+	.book img{
+		height: 55vw;
+	}
+}
+
+@media (max-width: 768px) {
+	.book img{
+	 min-height: 100vw !important;	 
+	} 
+}*/
+
+.book:hover{
+	-webkit-box-shadow: 10px 10px 60px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 60px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 60x 0px rgba(0,0,0,0.75);
+}
+
+
+
+
+/* custom checkboxes */
+
+.custom-control-label:before{
+  background-color: #f3f3f3;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+  background-color: #f3f3f3;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after{
+  background-image: url("https://image.freepik.com/iconen-gratis/controle-teken-in-een-ronde-zwart-vierkant_318-42213.jpg");
+  background-size: 16px 16px;  
+}
+
+
+/*jumbotron/breadcrumb */
+
+.jumbotron .breadcrumb .breadcrumb-item a{
+	color: black;
+}
+
+.jumbotron .breadcrumb .breadcrumb-item a:hover{
+	background-color: black;
+	color: white;
+	text-decoration: none;
+
+}
+
+
+/* pagination */
+.pagination > li > a,
+.pagination > li > a,
+.pagination > li > span,
+.pagination > li > span{
+    z-index: 3;
+    color: black;
+    background-color: white;
+    
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+    z-index: 3;
+	 color: black;
+    background-color: #f1f1f1;
+    
+	box-shadow: none;
+	
+}
+
+.pagination > li.active > a,
+.pagination > li.active > a,
+.pagination > li.active > span,
+.pagination > li.active > span {
+    z-index: 3;
+    color: white !important;
+    background-color: black !important;
+    border-color: black !important;
+	box-shadow: none !important;
+	
+}
+/* Footer */
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+section {
+    padding: 60px 0;
+	margin-top: 60px;
+}
+
+section .section-title {
+    text-align: center;
+    color: #007b5e;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+#footer {
+    /*background: #007b5e !important;*/
+	background: #000 !important;
+}
+#footer h5{
+	padding-left: 10px;
+    border-left: 3px solid #eeeeee;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+    color:#ffffff;
+}
+#footer a {
+    color: #ffffff;
+    text-decoration: none !important;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+#footer ul.social li{
+	padding: 3px 0;
+}
+#footer ul.social li a i {
+    margin-right: 5px;
+	font-size:25px;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.social li:hover a i {
+	font-size:30px;
+	margin-top:-10px;
+}
+#footer ul.social li a,
+#footer ul.quick-links li a{
+	color:#ffffff;
+}
+#footer ul.social li a:hover{
+	color:#eeeeee;
+}
+#footer ul.quick-links li{
+	padding: 3px 0;
+	-webkit-transition: .5s all ease;
+	-moz-transition: .5s all ease;
+	transition: .5s all ease;
+}
+#footer ul.quick-links li:hover{
+	padding: 3px 0;
+	margin-left:5px;
+	font-weight:700;
+}
+#footer ul.quick-links li a i{
+	margin-right: 5px;
+}
+#footer ul.quick-links li:hover a i {
+    font-weight: 700;
+}
+
+@media (max-width:767px){
+	#footer h5 {
+    padding-left: 0;
+    border-left: transparent;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+}
+}
+
+
+/* form focus outline color */
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus { 
+  border-color: rgba(140, 140, 140, 0.8);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(140, 140, 140, 1);
+  outline: 0 none;
+}
+
+

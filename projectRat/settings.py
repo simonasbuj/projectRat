@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #myapps
+    'library',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +57,7 @@ ROOT_URLCONF = 'projectRat.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,8 +78,12 @@ WSGI_APPLICATION = 'projectRat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wktlvtji',
+        'USER': 'wktlvtji',
+        'PASSWORD': 'YUtdlSJELk859rkWDs7hpC0ijMdjysO9',
+        'HOST': 'horton.elephantsql.com',
+        'PORT': '5432',
     }
 }
 
@@ -118,3 +125,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+#where to collect files use pythona manage.py collectstatic in console
+#STATIC_ROOT ='../static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/') #where collect static collects files
+
+MEDIA_URL = '/uploaded_files/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
+
+
+#additional dirs to look for static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static/base"),    
+]
