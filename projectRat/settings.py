@@ -127,13 +127,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 #where to collect files use pythona manage.py collectstatic in console
 #STATIC_ROOT ='../static'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/') #where collect static collects files
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/') #where {%collect static%} collects files
 
 MEDIA_URL = '/uploaded_files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
 
 
 #additional dirs to look for static files
+#its not even working
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static/base"),    
+    os.path.join(BASE_DIR, "static/main"),    
 ]
