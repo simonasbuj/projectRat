@@ -25,7 +25,7 @@ SECRET_KEY = '7b13r(vc7b)y7sq5@p*)u-$^fm8(+&b8ivz11+w(ild-&f6f0#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['wetpenguin.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,6 +76,7 @@ WSGI_APPLICATION = 'projectRat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+#real db
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -86,6 +87,21 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+#mysql db for testing on pythonanywhere
+""" DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'LonelyPenguin$library',
+        'USER': 'WetPenguin',
+        'PASSWORD': 'LOKYS123',
+        'HOST': 'WetPenguin.mysql.pythonanywhere-services.com',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+        'OPTIONS': {
+            'sql_mode': 'STRICT_TRANS_TABLES',
+        },
+    }
+} """
 
 
 # Password validation
