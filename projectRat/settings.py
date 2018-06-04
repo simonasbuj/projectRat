@@ -25,7 +25,7 @@ SECRET_KEY = '7b13r(vc7b)y7sq5@p*)u-$^fm8(+&b8ivz11+w(ild-&f6f0#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['wetpenguin.pythonanywhere.com']
 
 
 # Application definition
