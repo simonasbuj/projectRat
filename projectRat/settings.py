@@ -34,9 +34,12 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'django.contrib.sessions', #default django.contrib.sessions
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #3rd party authentication
+    'social_django',
 
     #myapps
     'library',
@@ -65,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # <- social auth
+                'social_django.context_processors.login_redirect', # <- scoial auth
             ],
         },
     },
@@ -154,3 +159,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/main"),    
 ]
+
+#login logout
+#LOGOUT_REDIRECT_URL = os.path.join(BASE_DIR, 'knygos')
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'accounts:login'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '201422127269-o6kt77vsnjdadhbn0labpt63vo2npblm.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'SAJZ3FqIppoSdPx9HX-Ufleu'

@@ -68,14 +68,15 @@
 							<img src="{% static 'img/logo.png' %}" width="100" height="100" alt="">
 						</a>
 					</div>
-					<div id="profiletopright" class="mr-2">
-						<!-- jeigu prisijungęs --> 
+					<!-- jeigu prisijungęs --> 
+					{% if user.is_authenticated %}
+					<div id="profiletopright" class="mr-2">						
 						<li class="nav-item dropdown" style="list-style-type: none;">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<img class="circle" style="border-radius:90px;"						
 								src="data:image/jpeg;base64,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"
 								width="50" height="50" alt="">
-								Slapyvardis
+								{{ user.username }}
 							</a>							
 							<div class="dropdown-menu dropdown-menu-right no-radius" aria-labelledby="navbarDropdown">
 								  <a class="dropdown-item text-dark" href="#"><i class="far fa-fw fa-comment-alt"></i> Pranešimai <span class="badge badge-info">18</span></a>
@@ -83,14 +84,16 @@
 								  <a class="dropdown-item text-dark" href="#"><i class="fa fa-fw fa-user-circle"></i> Paskyra</a>								  
 								  <div class="dropdown-divider"></div>
 								  <a class="dropdown-item text-dark" href="#"><i class="fa fa-fw fa-cog"></i> Nustatymai</a>
-								  <a class="dropdown-item text-dark" href="#"><i class="fa fa-fw fa-sign-out-alt"></i> Atsijungti</a>
+								  <a class="dropdown-item text-dark" href="{% url 'accounts:logout' %}"><i class="fa fa-fw fa-sign-out-alt"></i> Atsijungti</a>
 							</div>
 						</li><!-- /jeigu prisijungęs -->
 					</div>
-						<!-- Jeigu neprisijungęs trigger modal  
+					{% else %}
+						<!-- Jeigu neprisijungęs trigger modal --> 
 						<button type="button" class="btn btn-login no-radius" data-toggle="modal" data-target="#exampleModal">
 							<i class="fa fa-fw fa-sign-in-alt"></i> PRISIJUNGTI
-						</button><!-- //Jeigu neprisijungęs -->
+						</button><!-- //Jeigu neprisijungęs--> 
+					{% endif %}
 					
 				</nav>			
 				
@@ -109,8 +112,8 @@
 					</ol>				  
 				  <p class="lead mt-2">{% block breadcrumbinfo %}Knygų sąrašas{% endblock breadcrumbinfo %}</p>
 				  <hr class="my-4">
-				    <form class="form-inline">
-						<input class="form-control form-control-lg mr-sm-2 w-75 no-radius" type="search" placeholder="Paieška" aria-label="Search">
+				    <form class="form-inline" action="{% url 'library:search' %}" method="POST">{% csrf_token %}
+						<input class="form-control form-control-lg mr-sm-2 w-75 no-radius" name="keywoard" type="search" placeholder="Paieška" aria-label="Search">
 						<button class="btn btn-lg btn-login my-2 my-sm-0 ml-2 no-radius border-black" type="submit" id="search-btn"><i class="fa fa-fw fa-search"></i></button>
 					</form>
 				</div>
@@ -204,7 +207,7 @@
 							
 	<!-- Prisijungimo Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
 			<h5 class="modal-title" id="exampleModalLabel">PRISIJUNGIMO BŪDAI</h5>
@@ -213,8 +216,8 @@
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<a href="#" class="btn btn-primary btn-block no-radius"><i class="fab fa-facebook-f"></i> Facebook</a>
-			<a href="#" class="btn btn-danger btn-block no-radius"><i class="fab fa-google"></i> Google</a>
+			<a href="#" class="btn btn-primary btn-block no-radius disabled"><i class="fab fa-facebook-f"></i> Facebook</a>
+			<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-block no-radius"><i class="fab fa-google"></i> Google</a>
 		  </div>
 		  <div class="modal-footer">
 		  </div>

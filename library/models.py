@@ -84,7 +84,7 @@ class Book(models.Model):
 #writers table
 class Writer(models.Model):
     name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
     slug = models.SlugField(editable=False)
     birth_date = models.DateField()
     death_date = models.DateField(null=True, blank=True)
@@ -94,10 +94,16 @@ class Writer(models.Model):
         unique_together = ('name', 'last_name')
 
     def __str__(self):
-        return self.name + ' ' + self.last_name
+        if self.last_name:
+            return self.name + ' ' + self.last_name
+        else:
+            return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name + ' ' + self.last_name)
+        if self.last_name:
+            self.slug = slugify(self.name + ' ' + self.last_name)
+        else:
+            self.slug = slugify(self.name)
         return super(Writer, self).save(*args, **kwargs)
 
 #tags table
