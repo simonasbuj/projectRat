@@ -92,7 +92,7 @@ DATABASES = {
 """ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'LonelyPenguin$library',
+        'NAME': 'WetPenguin$library',
         'USER': 'WetPenguin',
         'PASSWORD': 'LOKYS123',
         'HOST': 'WetPenguin.mysql.pythonanywhere-services.com',   # Or an IP Address that your DB is hosted on
@@ -128,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EET'
 
 USE_I18N = True
 

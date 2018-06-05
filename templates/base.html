@@ -103,8 +103,8 @@
 				<div class="jumbotron mt-2 pb-4">
 					<ol class="breadcrumb display-4 mb-0 p-0">
                     {% block breadcrumb %}
-                      <li class="breadcrumb-item"><a href="#">Knygos</a></li>                      
-                      <li class="breadcrumb-item active">Pavadinimas Knygos</li>
+                      <li class="breadcrumb-item"><a href="{% url 'library:index' %}">Knygos</a></li>                      
+                      <!--<li class="breadcrumb-item active">Pavadinimas Knygos</li>-->
                     {% endblock breadcrumb %}
 					</ol>				  
 				  <p class="lead mt-2">{% block breadcrumbinfo %}Knygų sąrašas{% endblock breadcrumbinfo %}</p>

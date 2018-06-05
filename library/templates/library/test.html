@@ -1,12 +1,25 @@
 {% load static %}
 
+<!--books list page and counting the tags added-->
 <h2>Knygos</h2>
 
 {% for book in book_list %}
-    <h3>{{ book.title }}</h3>
+    <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
+    <h3>{{ book.slug }}</h3>
+    {% for writer in book.writers.all %}
+        <h4>{{ writer.name|add:' '|add:writer.last_name }}</h4>
+    {% endfor %}
+    <h5>{{ book.category.name }}</h5>
     {% if book.cover %}
-        <img src="{{ book.cover.url }}"/>
+        <img src="{{ book.cover.url }}">
+        <a href="{{ book.cover.url }} ">download</a>
     {% else%}
         <img src="{% static 'img/no_cover.jpg' %}"/>
     {% endif %}
+    <br />
+    {% for booktag in book.booktags_set.all %}
+        <h6 style="display: inline-block;">{{ booktag.tag }} ({{ booktag.users.all.count }})</h6>        
+    {% endfor %}
+    <h5>isviso: {{ book.get_added_tags_count }}</h5>
+
 {% endfor %}

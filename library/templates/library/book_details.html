@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+    {{ block.super }}                 
+    <li class="breadcrumb-item active">{{ book.title }}</li>
+{% endblock breadcrumb %}
+{% block breadcrumbinfo %}Knygos aprašymas{% endblock breadcrumbinfo %}
+
+{% block content %}
+
+{% endblock content %}
