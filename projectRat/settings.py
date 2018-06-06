@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     #myapps
     'library',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -167,12 +168,18 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
     'social_core.backends.google.GoogleOpenId',  # for Google authentication
     'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    'social_core.backends.facebook.FacebookOAuth2', # for Facebook authentication ;d
 
     'django.contrib.auth.backends.ModelBackend',
 )
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'accounts:login'
+LOGIN_ERROR_URL = 'accounts:login'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '201422127269-o6kt77vsnjdadhbn0labpt63vo2npblm.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'SAJZ3FqIppoSdPx9HX-Ufleu'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '889491574575981'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'c03b68b5bd242f6b0201f56f4b0656d3'  # App Secret

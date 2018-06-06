@@ -52,35 +52,37 @@
     </div><!-- /row left -->
     
     <!-- pagination -->
-    <nav aria-label="Page navigation example">
-      <ul class="pagination pagination-lg example">
-        {% if books.has_previous %}
-          <li class="page-item"><a class="page-link" href="?p={{ books.previous_page_number }}">&laquo;</a></li>
-          {% if books.number > 2 %}
-            <li class="page-item"><a class="page-link" href="?p=1">1</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-          {% endif %}
-        {% else %}
-          <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-        {% endif %}
-        {% for page in books.paginator.page_range %}
-          {% if page >= books.number|add:"-1" and page <= books.number|add:"1" %}
-            {% if page == books.number %}
-              <li class="page-item active"><a class="page-link" href="?p={{ page }}">{{ page }}</a></li>
-            {% else %}
-              <li class="page-item"><a class="page-link" href="?p={{ page }}">{{ page }}</a></li>
+    {% if books.paginator.page_range %}
+      <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-lg example">
+          {% if books.has_previous %}
+            <li class="page-item"><a class="page-link" href="?p={{ books.previous_page_number }}">&laquo;</a></li>
+            {% if books.number > 2 %}
+              <li class="page-item"><a class="page-link" href="?p=1">1</a></li>
+              <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
             {% endif %}
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
           {% endif %}
-        {% endfor %}
-        {% if books.has_next and books.number < books.paginator.num_pages|add:"-1" %}
-          <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-          <li class="page-item"><a class="page-link" href="?p={{ books.paginator.num_pages }}">{{ books.paginator.num_pages }}</a></li>
-          <li class="page-item"><a class="page-link" href="?p={{ books.next_page_number }}">&raquo;</a></li>
-        {% else %}
-          <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
-        {% endif %}
-      </ul>
-    </nav><!-- /pagination -->
+          {% for page in books.paginator.page_range %}
+            {% if page >= books.number|add:"-1" and page <= books.number|add:"1" %}
+              {% if page == books.number %}
+                <li class="page-item active"><a class="page-link" href="?p={{ page }}">{{ page }}</a></li>
+              {% else %}
+                <li class="page-item"><a class="page-link" href="?p={{ page }}">{{ page }}</a></li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          {% if books.has_next and books.number < books.paginator.num_pages|add:"-1" %}
+            <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+            <li class="page-item"><a class="page-link" href="?p={{ books.paginator.num_pages }}">{{ books.paginator.num_pages }}</a></li>
+            <li class="page-item"><a class="page-link" href="?p={{ books.next_page_number }}">&raquo;</a></li>
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+          {% endif %}
+        </ul>
+      </nav><!-- /pagination -->
+    {% endif %}
     
 </div> <!-- /column left-->
 

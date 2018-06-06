@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+	<link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
 	<link href="{% static 'css/mystyle.css' %}" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
@@ -208,7 +208,7 @@
 	<!-- Prisijungimo Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
+		<div class="modal-content no-radius">
 		  <div class="modal-header">
 			<h5 class="modal-title" id="exampleModalLabel">PRISIJUNGIMO BŪDAI</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -216,10 +216,11 @@
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<a href="#" class="btn btn-primary btn-block no-radius disabled"><i class="fab fa-facebook-f"></i> Facebook</a>
-			<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-block no-radius"><i class="fab fa-google"></i> Google</a>
+			<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-block no-radius py-2"><i class="fab fa-google"></i> Google</a>
+			<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-block no-radius py-2"><i class="fab fa-facebook-f"></i> Facebook</a>
 		  </div>
 		  <div class="modal-footer">
+			  <small class="text-muted mr-auto">Prisijungdami sutinkate su Knygų Žiurkė&trade; <a href="#">privatumo taisyklėmis</a></small>
 		  </div>
 		</div>
 	  </div>

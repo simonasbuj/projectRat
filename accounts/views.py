@@ -5,9 +5,9 @@ from django.contrib.auth import logout as django_logout
 
 def logout(request):
     django_logout(request)
-    return redirect('/knygos')
+    return redirect('library:index')
 
 def login_view(request):
     print('testuojam')
-    return redirect('/knygos')
+    return redirect('library:index')
 
