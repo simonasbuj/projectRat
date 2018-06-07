@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block breadcrumb %}
     {{ block.super }}                 
@@ -7,5 +8,206 @@
 {% block breadcrumbinfo %}Knygos aprašymas{% endblock breadcrumbinfo %}
 
 {% block content %}
+<div class="row">
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-12 col-md-4 pr-0">
+                {% if book.cover %}
+                    <img class="img-fluid" src="{{ book.cover.url }}">
+                {% else %}
+                    <img class="img-fluid" src="{% static 'img/no_cover.jpg' %}">
+                {% endif %}
+            </div><!--/book image column-->
+            <div class="col-sm-12 col-md-8">
+                <h4>knygos info</h4>
+            </div><!--/book info column-->
 
+            <div class="col-sm-12 pt-2">
+                <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Komentarai</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Apžvalgos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Tagai</a>
+                    </li>
+                    </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <!-- Komentarai -->
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="comments-container">    
+                                <ul id="comments-list" class="comments-list">
+                                    <li>
+                                        <div class="comment-main-level">
+                                            <!-- Avataras -->
+                                            <div class="comment-avatar"><img src="{% static 'img/profile_icon.jpg' %}" alt=""></div>
+                                            <!-- komentaras -->
+                                            <div class="comment-box" comId="1">
+                                                <div class="comment-head">
+                                                    <h6 class="comment-name by-author"><a href="#">GėlinisSkaitytojas</a></h6>
+                                                    <span>prieš 2 dienas</span>
+                                                    <i class="fa fa-reply"></i>
+                                                </div>
+                                                <div class="comment-content">
+                                                    Pati mylmiausia knyga šioje žemėje!!! &#x1F60D;&#x1F60D;
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- komentarai atsakymai -->
+                                        <ul class="comments-list reply-list">
+                                            <li>
+                                                <!-- Avataras -->
+                                                <div class="comment-avatar"><img src="{% static 'img/profile_icon2.png' %}" alt=""></div>
+                                                <!-- komentaras -->
+                                                <div class="comment-box" comId="2">
+                                                    <div class="comment-head">
+                                                        <h6 class="comment-name"><a href="#">Žuvėdra68</a></h6>
+                                                        <span>prieš 20 minučių</span>
+                                                        <i class="fa fa-reply"></i>
+                                                    </div>
+                                                    <div class="comment-content">
+                                                        Ilgas tekstas apie tai, jog yra daug įdomesnių knygų...
+                                                    </div>
+                                                </div>
+                                            </li>
+                        
+                                            <li>
+                                                <!-- Avataras -->
+                                                <div class="comment-avatar"><img src="{% static 'img/profile_icon.jpg' %}" alt=""></div>
+                                                <!-- komentaras -->
+                                                <div class="comment-box" comId="3">
+                                                    <div class="comment-head">
+                                                        <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">GėlinisSkaitytojas</a></h6>
+                                                        <span>prieš 11 minučių</span>
+                                                        <i class="fa fa-reply"></i>
+                                                    </div>
+                                                    <div class="comment-content">
+                                                        Bet kiekvienas turi savo nuomonę ir mėgstamiausią knygą. &#x1F622;
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                        
+                                    <li>
+                                        <div class="comment-main-level">
+                                            <!-- Avataras -->
+                                            <div class="comment-avatar"><img src="{% static 'img/profile_icon2.png' %}" alt=""></div>
+                                            <!-- komentaras -->
+                                            <div class="comment-box" comId="4">
+                                                <div class="comment-head">
+                                                    <h6 class="comment-name"><a href="#">Žuvėdra68</a></h6>
+                                                    <span>prieš 10 minučių</span>
+                                                    <i class="fa fa-reply"></i>
+                                                </div>
+                                                <div class="comment-content">
+                                                    Sorry bet ne...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- komentaro rašymas-->
+                            <div class="comments-container mt-0">
+                                <h1 id="reply">Komentuok</h1>
+                                <ul id="comments-list" class="comments-list">
+                                    <li>
+                                        <div class="comment-main-level">
+                                            <!-- Avataras -->
+                                            <div class="comment-avatar"><img src="{% static 'img/profile_icon2.png' %}" alt=""></div>
+                                            <!-- komentaras -->
+                                            <div class="comment-box">
+                                                <div class="comment-head">
+                                                    <h6 class="comment-name"><a href="#">Žuvėdra68</a></h6>
+                                                    <span>dabar</span>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <form>
+                                                        <input type="hidden" name="isReply" value="0">
+                                                        <div class="form-group" id="newcomment">
+                                                            <textarea class="form-control" id="newcomment_text" rows="3" placeholder="Prašau be spoilerių"></textarea>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--/comments container-->
+
+                    </div><!--/comments tab-->
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Apžvalgos</div>
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Tagai</div>
+                </div>
+            </div><!--/book tabs column-->
+
+        </div><!--/first row on the left-->
+    </div><!--/left column-->
+
+    <div class="col-sm-4">
+        <h4>kalbos ir prid4ti knyga</h4>
+    </div><!--/right column-->
+
+
+</div><!--/whole page-->
 {% endblock content %}
+
+
+
+{% block javascript %}
+{{ block.super }}
+<script>
+    $( document ).ready(function() {
+        $(".fa-reply").click(function(e) {
+            //get parent div
+            let parentComment = $(this).closest(".comment-box")
+
+            //get coment author
+            let author = parentComment.find(".comment-name")
+            author = author.text()
+            console.log(author)
+
+            //get comment id
+            let id = parentComment.attr("comId")
+            console.log(id)
+
+            //get comment text
+            let comment = parentComment.find(".comment-content")
+            comment = comment.text().trim()
+            console.log(comment)
+
+            changeReplyText(author, comment)
+            changeIsReply(id)
+
+            //move to reply area and focus it boiiiii
+            $('html, body').animate({
+                scrollTop: $("#reply").offset().top - 200
+            }, 1000);            
+            $("#newcomment_text").focus();
+
+            $("#dontreply").click(function(e) {
+                console.log("bandysim pasalinti reply")
+                $(this).closest("div").fadeOut(300, function() { $(this).closest("div").remove(); });
+                //$(this).closest("div").remove()
+                changeIsReply(0)
+            });
+            
+
+        });
+
+        function changeReplyText(author, comment){
+            let replyText = $("#newcomment")
+            replyText.find("div").remove()
+            replyText.prepend("<div><button id='dontreply' type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h5>Atsakai į " + author + " komentarą:</h5><p>" + comment + "</p></div>")
+        }
+        function changeIsReply(id){
+            let isReply = $("input[name='isReply']")
+            isReply.val(id)
+        }
+
+    });
+</script>
+{% endblock javascript %}

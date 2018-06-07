@@ -10,7 +10,6 @@
 <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-8">
 
-
     <div class="row">  
         
       {% for book in books %}
@@ -19,7 +18,7 @@
             <a href="{{ book.get_absolute_url }}">
               {% if book.cover %}
                 <img class="card-img-top" src="{{ book.cover.url }}" alt="Žiurkė sugraužė knygos viršelį!! &#x1F625">
-              {% else%}
+              {% else %}
                 <img class="card-img-top" src="{% static 'img/no_cover.jpg' %}" alt="Žiurkė sugraužė knygos viršelį!! &#x1F625">
               {% endif %}
             </a>
@@ -143,3 +142,21 @@
 
 </div>
 {% endblock content %}
+
+
+{% block javascript %}
+{{ block.super }}     
+
+<script>
+    
+    $("#Cat").click(function(e) {
+      $("#CatIcon").toggleClass('fa-caret-square-down');	
+      $("#CatIcon").toggleClass('fa-caret-square-up');
+    });
+    
+      $("#Adds").click(function(e) {
+      $("#AddsIcon").toggleClass('fa-caret-square-down');	
+      $("#AddsIcon").toggleClass('fa-caret-square-up');
+    });
+</script>
+{% endblock javascript %}

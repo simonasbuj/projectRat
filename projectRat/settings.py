@@ -183,3 +183,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'SAJZ3FqIppoSdPx9HX-Ufleu'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '889491574575981'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'c03b68b5bd242f6b0201f56f4b0656d3'  # App Secret
+
+
+#when going live this is important for Facebook login :d;d;
+# Force https redirect
+#SECURE_SSL_REDIRECT = True
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Force HTTPS in the final URIs
+#SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
