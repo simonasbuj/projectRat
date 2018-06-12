@@ -27,6 +27,14 @@ body{
 	border-color: white;	
 }
 
+.btn-dark-custom{ background-color: black !important; }
+.btn-dark-custom:hover{ background-color: #343A40 !important; }
+
+.bookmark{ color: #A6A6A6}
+.bookmark:hover{ color: black; cursor: pointer;}
+.bookmarked{ color: black !important}
+.bookmarked:hover{ color: black; cursor: pointer;}
+
 
 #menu-icon{
 	color: white;
@@ -311,9 +319,20 @@ section .section-title {
 }
 }
 
+/* popover */
+.popover{
+	border-color: black;
+}
+.popover-body{ 
+	background: black;
+	color: white;
+ }
+.popover .arrow:after{
+	border-top-color: black;
+}
 
 /* form focus outline color */
-textarea:focus,
+textarea:focus:not(.is-invalid),
 input[type="checkbox"]:focus,
 input[type="checkbox"]:after,
 input[type="text"]:focus,
@@ -409,7 +428,7 @@ ul {
 }
 
 /**
- * komentarai, jų info
+ * Komentaru listas
  -----------------------*/
 .comments-list:before {
 	content: '';
@@ -467,7 +486,7 @@ ul {
 	margin-top: 15px;
 }
 /**
- * Avatar
+ * Avataras
  ---------------------------*/
 .comments-list .comment-avatar {
 	width: 65px;
@@ -503,7 +522,7 @@ ul {
 	clear: both;
 }
 /**
- * Caja del Comentario
+ * komentaru turinys
  ---------------------------*/
 .comments-list .comment-box {
 	width: 680px;

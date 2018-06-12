@@ -192,3 +192,8 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'c03b68b5bd242f6b0201f56f4b0656d3'  # App Secret
 #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Force HTTPS in the final URIs
 #SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
+
+#redirect to current page after login
+#?next={{request.path}} add this after href
+#doesnt register login_view doe ;d;d;

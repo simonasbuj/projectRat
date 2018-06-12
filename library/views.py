@@ -3,9 +3,13 @@ from django.shortcuts import redirect
 
 from django.shortcuts import render, get_object_or_404, render_to_response
 from datetime import datetime
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 
+#ajax
+from django.core import serializers
+from django.forms.models import model_to_dict
+import json
 
 #pagination
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -83,3 +87,45 @@ def search(request):
 """ def logout_view(request):
     logout(request)
     return redirect('/knygos') """
+
+
+
+#norender
+def bookmark(request, slug):
+    book = get_object_or_404(Book, slug=slug)
+    if request.is_ajax():
+        if request.user.is_authenticated:
+            if book in request.user.info.bookmarks.all():
+                #remove from bookmarks
+                request.user.info.bookmarks.remove(book)
+            else:
+                #add to bookmarks
+                request.user.info.bookmarks.add(book)
+
+            data = {'success': True}
+            return HttpResponse(json.dumps(data), content_type='application/json')
+        else:
+            return HttpResponse('Neprisijungęs', status=401)
+    else:
+        return redirect(book)
+
+def comment(request, slug):
+    book = get_object_or_404(Book, slug=slug)
+    if request.method == "POST":
+        parent_id = request.POST.get("parentId")
+        text = request.POST.get("text")
+        print(text)
+        #empty comment
+        if not text:
+            data = {
+                'error': "negali buti tuscias"
+            }
+            return JsonResponse(data)
+        print("bandysim addinti comment knygai: " + text + " su id: " + parent_id)
+        return redirect(book)
+    else:
+        print("nepaeis")
+        return redirect(book)
+
+
+

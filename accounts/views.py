@@ -9,5 +9,6 @@ def logout(request):
 
 def login_view(request):
     print('testuojam')
+    print(request.path)
     return redirect('library:index')
 
