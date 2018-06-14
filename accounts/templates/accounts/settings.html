@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="#">{{ user.username }}</a></li>              
+    <li class="breadcrumb-item active">nustatymai</li>
+{% endblock breadcrumb %}
+{% block breadcrumbinfo %}Jūsų paskyros nustatymai{% endblock breadcrumbinfo %}
+
+{% block content %}
+nustatymai
+{% endblock content %}

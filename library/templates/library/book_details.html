@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-12 col-md-8">
         <div class="row">
             <div class="col-sm-12 col-md-4 pr-0">
                 {% if book.cover %}
@@ -20,107 +20,114 @@
             </div><!--/book image column-->
             <div class="col-sm-12 col-md-8">
                     <div class="float-right">
+                        <h1 class="d-inline"><span class="badge badge-dark" data-toggle='popover' data-trigger='hover' data-content='Įvertinimas' data-placement='top'>8.5</span></h1>     
                         {% if book in user.info.bookmarks.all %}
-                            <h1><i class="fa fa-star bookmarked" role="button" id="bookmark" data-toggle='popover' data-trigger='hover' data-content='Pamiršti' data-placement='top'></i></h1>
+                            <h1 class="d-inline"><i class="fa fa-star bookmarked" role="button" id="bookmark" data-toggle='popover' data-trigger='hover' data-content='Pamiršti' data-placement='top'></i></h1>
                         {% else %}
-                            <h1><i class="fa fa-star bookmark" role="button" id="bookmark" data-toggle='popover' data-trigger='hover' data-content='Prisiminti' data-placement='top'></i></h1>
-                        {% endif %}
+                            <h1 class="d-inline"><i class="fa fa-star bookmark" role="button" id="bookmark" data-toggle='popover' data-trigger='hover' data-content='Prisiminti' data-placement='top'></i></h1>
+                        {% endif %}                                           
                     </div>
             
-                <h4>knygos info</h4>
+                <h1>{{ book.title }}</h1>
+                <h4>Autoriai:</h4>
+                <h3>{% for writer in book.writers.all %}<a href="#"  class="text-muted">{{ writer }}</a> {% endfor %}</h3>                
+                <h4>Žanras:</h4>
+                <h3><a href="#"  class="text-muted">{{ book.category }}</a></h3>
+                <h4>Aprašymas:</h4>
+                <h6 class="text-muted text-justify">{{ book.description|safe|linebreaks}}</h6>
             </div><!--/book info column-->
 
             <div class="col-sm-12 pt-2">
                 <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-comments" role="tab" aria-controls="pills-home" aria-selected="true">Komentarai  <i class="far fa-comments"></i></a>
+                        <a class="nav-link active" id="pills-comments-tab" data-toggle="pill" href="#pills-comments" role="tab" aria-controls="pills-comments" aria-selected="true">Komentarai  <i class="far fa-comments"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-reviews" role="tab" aria-controls="pills-profile" aria-selected="false">Apžvalgos <i class="fas fa-balance-scale"></i></i></a>
+                        <a class="nav-link" id="pills-reviews-tab" data-toggle="pill" href="#pills-reviews" role="tab" aria-controls="pills-reviews" aria-selected="false">Apžvalgos <i class="fas fa-balance-scale"></i></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-tags" role="tab" aria-controls="pills-contact" aria-selected="false">Tagai <i class="fab fa-slack-hash"></i></a>
+                        <a class="nav-link" id="pills-tags-tab" data-toggle="pill" href="#pills-tags" role="tab" aria-controls="pills-tags" aria-selected="false">Tagai <i class="fab fa-slack-hash"></i></a>
                     </li>
                     </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <!-- Komentarai -->
                     <div class="tab-pane fade show active" id="pills-comments" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="comments-container">    
-                                <ul id="comments-list" class="comments-list">
-                                    <li>
-                                        <div class="comment-main-level">
-                                            <!-- Avataras -->
-                                            <div class="comment-avatar"><img src="{% static 'img/profile_icon.jpg' %}" alt=""></div>
-                                            <!-- komentaras -->
-                                            <div class="comment-box" comId="1">
-                                                <div class="comment-head">
-                                                    <h6 class="comment-name by-author"><a href="#">GėlinisSkaitytojas</a></h6>
-                                                    <span>prieš 2 dienas</span>
-                                                    <i class="fa fa-reply" data-toggle='popover' data-trigger='hover' data-content='Atsakyti' data-placement='top'></i>
-                                                </div>
-                                                <div class="comment-content">
-                                                    Pati mylmiausia knyga šioje žemėje!!! &#x1F60D;&#x1F60D;
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- komentarai atsakymai -->
-                                        <ul class="comments-list reply-list">
-                                            <li>
-                                                <!-- Avataras -->
-                                                <div class="comment-avatar"><img src="{% static 'img/profile_icon2.png' %}" alt=""></div>
-                                                <!-- komentaras -->
-                                                <div class="comment-box" comId="2">
+                            {% if book.comment_set.all %}
+                            <div class="comments-container">                                
+                                <ul id="comments-list" class="comments-list">                                    
+                                        {% for comment in book.comment_set.all %}
+                                        {% if not comment.parent %}
+                                        <li>
+                                            <div class="comment-main-level">
+                                                <div class="comment-avatar"><img src="{{ comment.created_by.info.avatar.url }}" alt=""></div>
+                                                <div class="comment-box" comId="{{ comment.id }}">
                                                     <div class="comment-head">
-                                                        <h6 class="comment-name"><a href="#">Žuvėdra68</a></h6>
-                                                        <span>prieš 20 minučių</span>
+                                                        {% if comment.created_by == user %}
+                                                        <h6 class="comment-name by-you">
+                                                        {% else %}
+                                                        <h6 class="comment-name">                                                                
+                                                        {% endif %}
+                                                            <a href="#">{{ comment.created_by.username }}</a>
+                                                        </h6>
+                                                        <span>prieš {{ comment.get_age }}</span>
                                                         <i class="fa fa-reply" data-toggle='popover' data-trigger='hover' data-content='Atsakyti' data-placement='top'></i>
                                                     </div>
                                                     <div class="comment-content">
-                                                        Ilgas tekstas apie tai, jog yra daug įdomesnių knygų...
+                                                        {{ comment.text|safe }}
                                                     </div>
-                                                </div>
-                                            </li>
-                        
-                                            <li>
-                                                <!-- Avataras -->
-                                                <div class="comment-avatar"><img src="{% static 'img/profile_icon.jpg' %}" alt=""></div>
-                                                <!-- komentaras -->
-                                                <div class="comment-box" comId="3">
-                                                    <div class="comment-head">
-                                                        <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">GėlinisSkaitytojas</a></h6>
-                                                        <span>prieš 11 minučių</span>
-                                                        <i class="fa fa-reply" data-toggle='popover' data-trigger='hover' data-content='Atsakyti' data-placement='top'></i>
-                                                    </div>
-                                                    <div class="comment-content">
-                                                        Bet kiekvienas turi savo nuomonę ir mėgstamiausią knygą. &#x1F622;
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                        
-                                    <li>
-                                        <div class="comment-main-level">
-                                            <!-- Avataras -->
-                                            <div class="comment-avatar"><img src="{% static 'img/profile_icon2.png' %}" alt=""></div>
-                                            <!-- komentaras -->
-                                            <div class="comment-box" comId="4">
-                                                <div class="comment-head">
-                                                    <h6 class="comment-name"><a href="#">Žuvėdra68</a></h6>
-                                                    <span>prieš 10 minučių</span>
-                                                    <i class="fa fa-reply" data-toggle='popover' data-trigger='hover' data-content='Atsakyti' data-placement='top'></i>
-                                                </div>
-                                                <div class="comment-content">
-                                                    Sorry bet ne...
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
+                                            <!-- komentarai atsakymai -->
+                                            {% if comment.replies.all %}
+                                                {% if comment.replies.all.count > max_num_of_replies %}                                                                                          
+                                                    <ul class='comments-list reply-list' style="display: none;">
+                                                {% else %}
+                                                    <ul class='comments-list reply-list'>
+                                                {% endif %}                                              
+                                                    {% for reply in comment.replies.all %}
+                                                            <li>
+                                                                <div class='comment-avatar'><img src='{{ reply.created_by.info.avatar.url }}' alt=''></div>
+                                                                <div class='comment-box' comId='{{ reply.id }}'>
+                                                                    <div class='comment-head'>
+                                                                        {% if reply.created_by == user %}
+                                                                        <h6 class="comment-name by-you">
+                                                                        {% else %}
+                                                                        <h6 class="comment-name">                                                                
+                                                                        {% endif %}
+                                                                        <a href='#'>{{ reply.created_by.username }}</a></h6>
+                                                                        <span>{{ reply.get_age }}</span>
+                                                                        <i class='fa fa-reply' data-toggle='popover' data-trigger='hover' data-content='Atsakyti' data-placement='top'></i>
+                                                                    </div>
+                                                                    <div class='comment-content'>
+                                                                        {{ reply.text|safe }}
+                                                                    </div>
+                                                                </div>
+                                                            </li>                                                        
+                                                    {% endfor %}
+                                                </ul>
+                                                {% if comment.replies.all.count > max_num_of_replies %}                                                                                          
+                                                    <button class="btn btn-sm btn-dark btn-block mt-1 showReplies">Rodyti atsakymus ({{ comment.replies.all.count }})</button>
+                                                {% endif %} 
+                                            {% endif %}
+                                            <!--/kommentaro atsakymai-->
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
                                 </ul>
                             </div>
+                            {% else %}
+                                <div class="row align-items-center pt-5" id="no_comments">
+                                    <div class="col-sm-12 text-center text-muted py-5">
+                                        <h3><i class="far fa-comments"></i></h3>
+                                        <h1 class="">Nėra komentarų</h1>
+                                        <h6>Būk Pirmas, pasidalinęs savo mintimis!</h6>
+                                    </div>                                
+                                </div>
+                            {% endif %}
                             <!-- komentaro rašymas-->
+                            {% if user.is_authenticated %}
                             <div class="comments-container mt-0">
-                                <h1 id="reply">Komentuok</h1>
+                                <h1 id="reply"></h1>
                                 <ul id="comments-list" class="comments-list">
                                     <li>
                                         <div class="comment-main-level">
@@ -153,19 +160,29 @@
                                     </li>
                                 </ul>
                             </div><!--/comments container-->
+                            {% else %}
+                                <div class="row align-items-center">
+                                    <div class="col-sm-12 text-center text-muted py-3">
+                                        <h6>Norėdamas dalyvauti diskusijoje</h6>
+                                        <button type="button" class="btn btn-dark btn-dark-custom no-radius" data-toggle="modal" data-target="#exampleModal">
+                                                <i class="fa fa-fw fa-sign-in-alt"></i> PRISIJUNK
+                                        </button><!-- //Jeigu neprisijungęs--> 
+                                    </div>                                
+                                </div>
+                            {% endif %}
 
                     </div><!--/comments tab-->
                     <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <div class="row align-items-center">
                             <div class="col-sm-12 text-center py-5">
-                                <h1 class="text-muted py-5">Comming soon... 2022</h1>
+                                <h1 class="text-muted py-5">Coming soon... 2022</h1>
                             </div>                                
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-tags" role="tabpanel" aria-labelledby="pills-contact-tab">
                         <div class="row align-items-center">
                             <div class="col-sm-12 text-center py-5">
-                                <h1 class="text-muted py-5">Comming soon... 2021</h1>
+                                <h1 class="text-muted py-5">Coming soon... 2021</h1>
                             </div>                                
                         </div>
                     </div>
@@ -175,8 +192,66 @@
         </div><!--/first row on the left-->
     </div><!--/left column-->
 
-    <div class="col-sm-4">
-        <h4>kalbos ir prid4ti knyga</h4>
+    <div class="col-sm-12 col-md-4">
+            <div id="accordionOrder">
+                    <div class="card">
+                      <div class="card-header pointer" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="true" aria-controls="collapseOrder">
+                        <h5 class="mb-0">
+                            Pridėti į užsakymą <i class="fas fa-caret-square-up float-right"></i>
+                        </h5>
+                      </div>
+              
+                      <div id="collapseOrder" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="select_kalba">Išsirinkite kalbą</label>
+                                    <select class="form-control pointer" id="select_kalba" name="select_kalba">
+                                        <option>Lietuvių</option>
+                                        <option>Anglų</option>
+                                        <option>Rusų</option>
+                                        <option>Lenkų</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-dark btn-dark-custom btn-block mt-3 no-radius" type="submit"><i class="fas fa-plus"></i> PRIDĖTI</button>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!-- /accordionOrder -->
+
+                  <div id="accordionSimilarBooks" class="mt-2">
+                        <div class="card">
+                          <div class="card-header pointer" id="Adds" data-toggle="collapse" data-target="#collapseSimilarBooks" aria-expanded="true" aria-controls="collapseSimilarBooks">
+                            <h5 class="mb-0">
+                                Panašios knygos <i class="fas fa-caret-square-down float-right" id="AddsIcon"></i>
+                            </h5>
+                          </div>
+                  
+                          <div id="collapseSimilarBooks" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for book in similar_books %}
+                                    <div class="col-sm-6 col-lg-4 mt-2">
+                                        <a href="{{ book.get_absolute_url }}">
+                                            <img class="w-100 book" src="{{ book.cover.url }}" data-toggle='popover' data-trigger='hover' data-content='{{ book.title }}' data-placement='top'>
+                                            <h2 class="top-right"><span class="badge badge-dark">8.5</span></h2> 
+                                        </a>
+                                    </div>
+                                    {% empty %}
+                                    <!--<div class="row align-items-center pt-5" id="no_comments">-->
+                                        <div class="col-sm-12 text-center text-muted py-5">
+                                            <h3><i class="fas fa-ban"></i></h3>
+                                            <h1 class="">Nėra panašių...</h1>
+                                            <h6>Ši knyga yra unikali!</h6>
+                                        </div>                                
+                                    
+                                    {% endfor %}
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div><!-- /accordionSimilarBooks -->
     </div><!--/right column-->
 
 
@@ -188,11 +263,17 @@
 {% block javascript %}
 {{ block.super }}
 <script>
+    //variables
+    var avatar = "{{ user.info.avatar.url }}"
+</script>
+<script src="{% static 'library/js/comments.js' %}"></script>
+<script>
     $( document ).ready(function() {
         $('[data-toggle="popover"]').popover(); 
         bookmark()
         addComment()
         reply()
+        showHiddenReplies()
     
         function reply(){
             $(".fa-reply").click(function(e) {
@@ -279,8 +360,13 @@
     
             form.submit(function(e){
                 e.preventDefault()
-                let csrf_token = form.find("[name='csrfmiddlewaretoken']").val()
-                let text = form.find("textarea").val().trim()              
+                let text = form.find("textarea").val().trim() 
+                if(!text){
+                    form.find("textarea").addClass("is-invalid")
+                    return false
+                }
+                text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+                let csrf_token = form.find("[name='csrfmiddlewaretoken']").val()             
                 let parentId = form.find("[name='isReply']").val()
                 console.log("CSRF: " + csrf_token + "\nTEXT: " + text + "\nPARENDID: " + parentId)
                 $.ajax({
@@ -296,30 +382,28 @@
                         if(data.error){
                             console.log(data.error)
                             form.find("textarea").addClass("is-invalid")
-                        } else if(parentId == 0){                            
-                            textarea.removeClass("is-invalid")
-                            textarea.val('')
-                            let commentDiv = $("#comments-list:first")
-                            text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                            commentDiv.append("<li><div class='comment-main-level'><div class='comment-avatar'><img src='{{ user.info.avatar.url }}' alt=''></div><div class='comment-box' comId='4'><div class='comment-head'><h6 class='comment-name'><a href='#'>{{ user.username }}</a></h6><span>dabar</span><i class='fa fa-reply' data-toggle='popover' data-trigger='hover' data-content='Atsakyti' data-placement='top'></i></div><div class='comment-content'>" + text + "</div></div></div></li>")
-                            $('html, body').animate({
-                                scrollTop: commentDiv.find("li").last().offset().top - 800
-                            }, 1000);                                                     
-                        } else {
-                            textarea.removeClass("is-invalid")
-                            textarea.val('')
-                            let parentCom = $("[comId='"+ parentId +"'")
-                            parentCom = parentCom.closest(".reply-list")
-                            parentCom.append("<li><div class='comment-main-level'><div class='comment-avatar'><img src='{{ user.info.avatar.url }}' alt=''></div><div class='comment-box' comId='4'><div class='comment-head'><h6 class='comment-name'><a href='#'>{{ user.username }}</a></h6><span>dabar</span><i class='fa fa-reply' data-toggle='popover' data-trigger='hover' data-content='Atsakyti' data-placement='top'></i></div><div class='comment-content'>" + text + "</div></div></div></li>")
-                            $('html, body').animate({
-                                scrollTop: parentCom.find("li").last().offset().top - 500
-                            }, 1000);
-                            let replyText = $("#newcomment")
-                            replyText.find("div#replyingTo").remove()
-    
+                            return false
+                        }
+                        textarea.removeClass("is-invalid")
+                        textarea.val('')
+                        $("#newcomment").find("div#replyingTo").remove()
+                        changeIsReply(0)
+                        
+                        if(!data.parent_id){
+                            if(data.no_comments == 1) {                            
+                                spawnCommentBox(data.id, data.text, data.created_by, avatar)
+                            } else if(data.no_comments == 0){
+                                spawnParentComment(data.id, data.text, data.created_by, avatar)
+                            }
+                        } else if(data.parent_id){
+                            if(data.no_comments == 1){
+                                spawnNewChild(data.id, data.text, data.created_by, avatar, data.parent_id)
+                            } else if(data.no_comments == 0){
+                                spawnAnotherChild(data.id, data.text, data.created_by, avatar, data.parent_id)
+                            }
                         }
                         reply()
-                    }                    
+                    }                   
                 })
     
     

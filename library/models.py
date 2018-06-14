@@ -16,6 +16,7 @@ from PIL import Image
 class Book(models.Model):
     title = models.CharField(max_length=100)
     cover = models.ImageField(upload_to=book_cover_upload, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     slug = models.SlugField(editable=False)
     writers = models.ManyToManyField('Writer')
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)

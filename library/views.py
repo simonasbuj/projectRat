@@ -20,6 +20,7 @@ from unidecode import unidecode #lietuviskas raides pakeicia i angliskas, del pa
 
 #models
 from .models import Book, Category
+from accounts.models import Comment
 
 # Create your views here.
 
@@ -53,8 +54,13 @@ def index(request):
 def book_details(request, slug):
     #book = Book.objects.get(slug=slug)
     book = get_object_or_404(Book, slug=slug)
+    similar_books = Book.objects.filter((Q(category=book.category) |  Q(tags__in=book.tags.all())) & ~Q(id = book.id)).distinct()[:24]
+    #print(similar_books[4])
+    max_num_of_replies = 5
     context = {
         'book': book,
+        'max_num_of_replies': max_num_of_replies,
+        'similar_books': similar_books,
     }
     return render(request, 'library/book_details.html', context)
 
@@ -111,16 +117,56 @@ def bookmark(request, slug):
 
 def comment(request, slug):
     book = get_object_or_404(Book, slug=slug)
-    if request.method == "POST":
-        parent_id = request.POST.get("parentId")
+    if request.method == "POST" and request.user.is_authenticated:
+        user = request.user
+        parent_id = int(request.POST.get("parentId"))
         text = request.POST.get("text")
-        print(text)
         #empty comment
         if not text:
             data = {
                 'error': "negali buti tuscias"
             }
             return JsonResponse(data)
+        #comment without parent
+        if parent_id == 0:            
+            comment = Comment.objects.create(text=text, created_by=user, book=book)
+
+            if book.comment_set.all().count() <= 1:
+                no_comments = 1
+            else: 
+                no_comments = 0
+            data = {
+                'id': comment.id,
+                'text': comment.text,
+                'created_by': comment.created_by.username,
+                'no_comments': no_comments,
+            }
+            return JsonResponse(data)
+        #comment with parent
+        if parent_id > 0:
+            parent_comment = get_object_or_404(Comment, id=parent_id)
+            if not parent_comment.parent:
+                comment = Comment.objects.create(text=text, created_by=user, book=book, parent=parent_comment)
+            else:
+                original_parent_coment = parent_comment.parent
+                parent_id = original_parent_coment.id
+                comment = Comment.objects.create(text=text, created_by=user, book=book, parent=original_parent_coment)
+
+            if comment.parent.replies.all().count() <= 1:
+                no_comments = 1
+            else:
+                no_comments = 0
+            
+            data = {
+                'parent_id': parent_id,
+                'id': comment.id,
+                'text': comment.text,
+                'created_by': comment.created_by.username,
+                'no_comments': no_comments,
+            }
+            return JsonResponse(data)
+                
+        
         print("bandysim addinti comment knygai: " + text + " su id: " + parent_id)
         return redirect(book)
     else:

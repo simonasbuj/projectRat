@@ -26,6 +26,11 @@ body{
 	background-color: white;
 	border-color: white;	
 }
+.top-right{
+	position: absolute;
+    top: 0px;
+    right: 0px;
+}
 
 .btn-dark-custom{ background-color: black !important; }
 .btn-dark-custom:hover{ background-color: #343A40 !important; }
@@ -333,6 +338,7 @@ section .section-title {
 
 /* form focus outline color */
 textarea:focus:not(.is-invalid),
+select:focus,
 input[type="checkbox"]:focus,
 input[type="checkbox"]:after,
 input[type="text"]:focus,
@@ -354,6 +360,23 @@ input[type="color"]:focus,
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(140, 140, 140, 1) !important;
   outline: 1px solid !important;
 }
+
+/* select.form-control > option:checked{ NEVEIKIA visose narsyklese
+	background-color: black;
+	color: white;
+}
+select.form-control > option:active,
+select.form-control > option:focus,
+select.form-control > option:hover{
+	background-color: black !important;
+	color: white !important;
+} */
+/* select.form-control { color: red; } */
+/* select.form-control > option:not(:checked) { background-color: black; }  */
+/* select.form-control{
+	color: green !important;
+	background-color: #fff;
+  } */
 
 /* book detail page */
 .img-fluid{
@@ -627,6 +650,21 @@ ul {
 	border-radius: 3px;
 }
 
+.comment-box .comment-name.by-you, .comment-box .comment-name.by-you a {/* color: #03658c; */ color: black;}
+.comment-box .comment-name.by-you:after {
+	content: 'Tu';
+	/* background: #03658c; */
+	background: black;
+	color: #FFF;
+	font-size: 12px;
+	padding: 3px 5px;
+	font-weight: 700;
+	margin-left: 5px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
 #dontreply{
 	/* color: red; */
 }
@@ -635,6 +673,12 @@ ul {
 	border-color: rgba(140, 140, 140, 0.8) !important;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(140, 140, 140, 1) !important;
 	outline: 0 none !important;
+}
+
+.showReplies{
+	width: 680px;
+	float: right;
+	position: relative;
 }
 
 /** =====================

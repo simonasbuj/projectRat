@@ -85,7 +85,7 @@
 								  <a class="dropdown-item text-dark" href="#"><i class="far fa-fw fa-calendar-alt"></i>Užsakymai</a>
 								  <a class="dropdown-item text-dark" href="#"><i class="fa fa-fw fa-user-circle"></i> Paskyra</a>								  
 								  <div class="dropdown-divider"></div>
-								  <a class="dropdown-item text-dark" href="#"><i class="fa fa-fw fa-cog"></i> Nustatymai</a>
+								  <a class="dropdown-item text-dark" href="{% url 'accounts:settings' user.username %}"><i class="fa fa-fw fa-cog"></i> Nustatymai</a>
 								  <a class="dropdown-item text-dark" href="{% url 'accounts:logout' %}"><i class="fa fa-fw fa-sign-out-alt"></i> Atsijungti</a>
 							</div>
 						</li><!-- /jeigu prisijungęs -->
@@ -121,7 +121,7 @@
 					</form>-->
 					<form action="{% url 'library:search' %}" method="POST">{% csrf_token %}
 						<div class="input-group mb-3 w-75">
-							<input class="form-control form-control-lg w-75 no-radius" name="keywoard" type="search" placeholder="Paieška" aria-label="Search">
+							<input class="form-control form-control-lg no-radius" name="keywoard" type="search" placeholder="Paieška" aria-label="Search">
 							<div class="input-group-append">
 								<button class="btn btn-lg btn-dark btn-dark-custom" type="submit"><i class="fa fa-fw fa-search"></i></button>
 							</div>

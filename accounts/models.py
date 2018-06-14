@@ -25,6 +25,7 @@ class Info(models.Model):
     phone_number = models.CharField(max_length=7, null=True, blank=True, unique=True)
     avatar = models.ImageField(upload_to=user_avatar_upload, null=True, blank=True)
     lytis = models.CharField(max_length=1, choices=LYTYS, default='p')
+    last_read_messages = models.DateTimeField(null=True, blank=True) #2018.06.14
     bookmarks = models.ManyToManyField(Book, blank=True)
 
     def save(self, *args, **kwargs):
@@ -50,13 +51,14 @@ class Info(models.Model):
 
 class Comment(models.Model):
     text = models.CharField(max_length=200)
-    created_at = models.DateTimeField(default=datetime.now, editable=False)  #auto_now_add=True
+    created_at = models.DateTimeField(default=timezone.now, editable=False)  #auto_now_add=True
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    parent = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True)
+    parent = models.ForeignKey('Comment', on_delete=models.CASCADE, null=True, blank=True, related_name="replies")
     book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         db_table = 'comments'
+        ordering = ['created_at']
 
     def __str__(self):
         return self.created_by.username + ': ' + self.text + ' prieš ' + self.get_age()#self.created_at.astimezone(to_tz).strftime("%Y-%m-%d %H:%M")
