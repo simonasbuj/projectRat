@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'library:index' %}">Knygnešys</a></li>           
+{% endblock breadcrumb %}
+{% block breadcrumbinfo %}Paprašyk arba nupirk knygą{% endblock breadcrumbinfo %}
+
+{% block content %}
+prasymai
+{% endblock content %}
+
+{% block javascript %}
+{{ block.super }}
+<script>
+    console.log("KNYGNESYS")
+</script>
+{% endblock javascript %}

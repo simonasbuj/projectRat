@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     #myapps
     'library',
     'accounts',
+    'entertainment',
 ]
 
 MIDDLEWARE = [
