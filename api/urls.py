@@ -6,5 +6,8 @@ router = routers.DefaultRouter()
 router.register('books', views.BookView)
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+
+    path('books/search/<keyword>/', views.SearchBooksView.as_view()),
+
 ]

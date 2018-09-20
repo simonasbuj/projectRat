@@ -149,6 +149,7 @@
                     <div class="form-group mr-auto">                        
                             <input type="text" class="form-control"  name="ISBN" placeholder="ISBN kodas">                        
                     </div>
+
                 </form>
             </div>
             <div class="modal-footer">
@@ -196,14 +197,11 @@
         
         $("#newWriterBtn").on("click", function(){
             console.log( $("input[name=writers]") )
-            html = "<div class='form-group mb-1'><input type='text' class='form-control'  name='writerName' placeholder='Autoriaus vardas ir pavardė'></div>"
+            html = "<div class='form-group mb-1'><input type='text' class='form-control'  name='writers' placeholder='Autoriaus vardas ir pavardė'></div>"
             $(html).hide().appendTo(writersDiv).fadeIn(1000)
 
-        })    
-
-
+        }) 
     });
-
 
     //atidaro wishinfomodal ir pakeicia duomenis
     function openWishInfo(){
