@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     #3rd party authentication
     'social_django',
 
+    #rest api framework
+    'rest_framework',
+
     #myapps
     'library',
     'accounts',

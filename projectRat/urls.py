@@ -29,6 +29,8 @@ urlpatterns = [
     path('', include('entertainment.urls')),
     path('auth/', include('social_django.urls', namespace='social')), #social auth
 
+    path('api/', include('api.urls')),
+
 ]
 
 #kad rodytu foto
