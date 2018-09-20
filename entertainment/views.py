@@ -4,3 +4,4 @@ from django.shortcuts import render
 
 def fundbook(request):
     return render(request, 'entertainment/fundbook.html')
+    

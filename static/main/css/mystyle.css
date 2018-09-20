@@ -689,6 +689,26 @@ ul {
 	position: relative;
 }
 
+/* floating action button */
+.btn-circle.btn-xl {
+    width: 90px;
+    height: 90px;
+    padding: 10px 16px;
+    border-radius: 45px;
+    font-size: 34px;
+    line-height: 1.33;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
 /** =====================
  * Responsive
  ========================*/
@@ -706,4 +726,48 @@ ul {
 	}
 }
 
+
+
+/** =====================
+ * Entertainment
+ ========================*/
+.wish{
+	width: 100% !important;
+}
+.wish:hover{
+	cursor: pointer;
+	-webkit-box-shadow: 10px 10px 60px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 60px 0px rgba(0,0,0,0.75);
+	box-shadow: 10px 10px 60x 0px rgba(0,0,0,0.75);
+	z-index: 100;
+}
+.wish .card-header{
+	background: #000;
+	color: white;
+}
+.wish img{
+	width: 75px;
+	height: 75px;
+	border-radius: 90px;
+}
+.wish .progress{
+	height: 2rem;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.wish .card-footer{
+	background-color: white;
+	border-top: none;
+}
+
+.close:focus{
+	outline-color: rgba(0,0,0, 0.75);
+	/* outline: none; */
+}
+
+#newWishBtn{
+	position: fixed;
+	bottom: 5.0rem;
+	right: 5.0rem;
+	z-index: 100;
+}
 
