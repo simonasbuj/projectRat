@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.contrib.staticfiles.templatetags.staticfiles import static
+
 #datetime
 from datetime import datetime
 from django.utils import timezone
@@ -47,6 +49,21 @@ class Info(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    @property
+    def avatar_url(self):
+        if self.avatar and hasattr(self.avatar, 'url'):
+            return self.avatar.url
+        else:
+            url = static('img/profile_icon.jpg')
+            return url
+
+    @property
+    def get_phone_number(self):
+        if self.phone_number:
+            return self.phone_number
+        else:
+            return ""
 
 
 class Comment(models.Model):

@@ -9,6 +9,7 @@ from django.urls import reverse
 #paveiksleliams
 from .helper import book_cover_upload
 from PIL import Image
+from django.contrib.staticfiles.templatetags.staticfiles import static 
 
 # Create your models here.
 
@@ -81,6 +82,9 @@ class Book(models.Model):
     def cover_url(self):
         if self.cover and hasattr(self.cover, 'url'):
             return self.cover.url
+        else:
+            url = static('img/no_cover.jpg')
+            return url
 
 #writers table
 class Writer(models.Model):

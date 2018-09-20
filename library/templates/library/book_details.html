@@ -12,11 +12,9 @@
     <div class="col-sm-12 col-md-8">
         <div class="row">
             <div class="col-sm-12 col-md-4 pr-0">
-                {% if book.cover %}
-                    <img class="img-fluid" src="{{ book.cover.url }}">
-                {% else %}
-                    <img class="img-fluid" src="{% static 'img/no_cover.jpg' %}">
-                {% endif %}
+
+                    <img class="img-fluid" src="{{ book.cover_url }}">
+
             </div><!--/book image column-->
             <div class="col-sm-12 col-md-8">
                     <div class="float-right">
@@ -59,7 +57,7 @@
                                         {% if not comment.parent %}
                                         <li>
                                             <div class="comment-main-level">
-                                                <div class="comment-avatar"><img src="{{ comment.created_by.info.avatar.url }}" alt=""></div>
+                                                <div class="comment-avatar"><img src="{{ comment.created_by.info.avatar_url }}" alt=""></div>
                                                 <div class="comment-box" comId="{{ comment.id }}">
                                                     <div class="comment-head">
                                                         {% if comment.created_by == user %}
@@ -86,7 +84,7 @@
                                                 {% endif %}                                              
                                                     {% for reply in comment.replies.all %}
                                                             <li>
-                                                                <div class='comment-avatar'><img src='{{ reply.created_by.info.avatar.url }}' alt=''></div>
+                                                                <div class='comment-avatar'><img src='{{ reply.created_by.info.avatar_url }}' alt=''></div>
                                                                 <div class='comment-box' comId='{{ reply.id }}'>
                                                                     <div class='comment-head'>
                                                                         {% if reply.created_by == user %}
@@ -133,11 +131,7 @@
                                         <div class="comment-main-level">
                                             <!-- Avataras -->                                            
                                             <div class="comment-avatar">
-                                                {% if user.info.avatar %}
-                                                    <img src="{{ user.info.avatar.url }}" alt="">
-                                                {% else %}
-                                                    <img src="{% static 'img/profile_icon2.png' %}" alt="">
-                                                {% endif %}
+                                                    <img src="{{ user.info.avatar_url }}" alt="">
                                             </div>
                                             <!-- komentaras -->
                                             <div class="comment-box">
@@ -234,7 +228,7 @@
                                     {% for book in similar_books %}
                                     <div class="col-sm-6 col-lg-4 mt-2">
                                         <a href="{{ book.get_absolute_url }}">
-                                            <img class="w-100 book" src="{{ book.cover.url }}" data-toggle='popover' data-trigger='hover' data-content='{{ book.title }}' data-placement='top'>
+                                            <img class="w-100 book" src="{{ book.cover_url }}" data-toggle='popover' data-trigger='hover' data-content='{{ book.title }}' data-placement='top'>
                                             <h2 class="top-right"><span class="badge badge-dark">8.5</span></h2> 
                                         </a>
                                     </div>
@@ -264,7 +258,7 @@
 {{ block.super }}
 <script>
     //variables
-    var avatar = "{{ user.info.avatar.url }}"
+    var avatar = "{{ user.info.avatar_url }}"
 </script>
 <script src="{% static 'library/js/comments.js' %}"></script>
 <script>
@@ -274,6 +268,7 @@
         addComment()
         reply()
         showHiddenReplies()
+        rotateCaret()
     
         function reply(){
             $(".fa-reply").click(function(e) {
@@ -404,10 +399,19 @@
                         }
                         reply()
                     }                   
-                })
-    
+                })  
     
             })
+        }
+
+        function rotateCaret(){
+            $(".card-header").click(function(e) {
+                //e.preventDefault();
+                $(this).find(".fas").toggleClass('fa-caret-square-down')
+                $(this).find(".fas").toggleClass('fa-caret-square-up')
+                //$("#CatIcon").toggleClass('fa-caret-square-down');	
+                //$("#CatIcon").toggleClass('fa-caret-square-up');			
+              });
         }
     
     });

@@ -5,8 +5,135 @@
     <li class="breadcrumb-item"><a href="#">{{ user.username }}</a></li>              
     <li class="breadcrumb-item active">nustatymai</li>
 {% endblock breadcrumb %}
-{% block breadcrumbinfo %}Jūsų paskyros nustatymai{% endblock breadcrumbinfo %}
+{% block breadcrumbinfo %}Jūsų paskyros nustatymai ir informacija{% endblock breadcrumbinfo %}
 
 {% block content %}
-nustatymai
+<div class="row">
+    <div class="col-sm-12 col-md-8">
+        {% if first_time %}
+        <div class="alert alert-dark" role="alert">
+                <h4 class="alert-heading">Sveikiname!</h4>
+                <p>Prisijungus prie Knygų Žiurkė&trade; bibliotekos internetinio puslapio!</p>
+                <hr>
+                <p>Žemiau galite pakeisti savo paskyros informaciją ir nustatymus</p>
+              </div>
+        {% endif %}
+        <div class="jumbotron">
+        <form>
+            <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Slapyvardis</label>
+                        <div class="col-sm-4">
+                          <input type="text" name="nickname" class="form-control" placeholder="Slapyvardis" value="{{ user.username }}">
+                        </div>
+            </div>
+
+            <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Paveikslėlis</label>
+                    <div class="col-sm-8 col-lg-4">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input pointer" onchange="previewFile('{{ user.info.avatar_url }}')">
+                                <label class="custom-file-label">Įkelk paveikslėlį</label>
+                                <div class="invalid-feedback">Turi būti paveikslėlis</div>
+                                <div class="valid-feedback">Super! Tinka</div>
+                            </div>
+                        <!--<input type="file" class="form-control-file" onchange="previewFile('{{ user.info.avatar_url }}')">-->
+                        <img src="{{ user.info.avatar_url }}" style="border-radius:90px;" width="50" height="50" class="mt-1" id="avatarPreview1">
+                        <img src="{{ user.info.avatar_url }}" width="59" height="59" class="mt-1" id="avatarPreview2">
+                    </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Telefono numeris</label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">86</div>
+                            </div>
+                            <input type="number" onKeyPress="if(this.value.length==7) return false;" class="form-control" id="inlineFormInputGroup" maxlength="7" value="{{ user.info.get_phone_number }}">
+                            </div>
+                            <small class="form-text text-muted">
+                                    Niekas nematys, išskyrus bibliotekos darbuotojai.
+                            </small>
+                    </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Vardas ir pavardė</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" placeholder="Vardas" value="{{ user.first_name }}">
+                <small class="form-text text-muted">
+                    Niekas nematys, išskyrus bibliotekos darbuotojai.
+                </small>
+              </div>
+
+              <div class="col-sm-4">
+                <input type="text" class="form-control" placeholder="Pavardė" value="{{ user.last_name }}">
+              </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Lytis</label>
+                  <div class="col-sm-4">
+                    <select id="inputState" class="form-control pointer">
+                        {% for n, choice in user.info.LYTYS %}
+                            {% if n == user.info.lytis %}
+                                <option selected>{{ choice }}</option>
+                            {% else %}
+                                <option>{{ choice }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+            </div>
+
+          </form>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+        akordionai
+    </div>
+</div>
 {% endblock content %}
+
+{% block javascript%}
+{{ block.super }}
+<script>
+    //variables
+    var avatar = "{{ user.info.avatar_url }}"
+
+    //change img src on file input
+    function previewFile(avatar) {
+        var preview1 = document.querySelector('#avatarPreview1');
+        var preview2 = document.querySelector('#avatarPreview2');
+        var file    = document.querySelector('input[type=file]').files[0];
+        var fileInputField = $('input[type=file]')
+        var fileType = file["type"]
+        var reader  = new FileReader();
+        var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+              
+        reader.onloadend = function () {
+            preview1.src = reader.result;
+            preview2.src = reader.result;
+        }
+        
+        if (file) {
+            if ($.inArray(fileType, ValidImageTypes) < 0) {
+                console.log(avatar)
+                preview1.src = avatar;
+                preview2.src = avatar;
+                fileInputField.addClass("is-invalid")
+                fileInputField.removeClass("is-valid")
+            }else {
+                reader.readAsDataURL(file);
+                fileInputField.removeClass("is-invalid")
+                fileInputField.addClass("is-valid")
+                //fileInputField.siblings('.custom-file-label').html(file)
+            }            
+        } else {
+            preview1.src = avatar;
+            preview2.src = avatar;
+        }
+
+        }
+</script>
+{% endblock javascript%}

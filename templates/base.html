@@ -73,15 +73,11 @@
 					<div id="profiletopright" class="mr-2">						
 						<li class="nav-item dropdown" style="list-style-type: none;">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								{% if user.info.avatar %}
-									<img class="circle" style="border-radius:90px;" src="{{ user.info.avatar.url }}" width="50" height="50" alt="">
-								{% else %}
-									<img class="circle" style="border-radius:90px;" src="{% static 'img/no_cover.jpg' %}" width="50" height="50" alt="">
-								{% endif %}
+									<img class="circle" style="border-radius:90px;" src="{{ user.info.avatar_url }}" width="50" height="50" alt="ayoo">
 								{{ user.username }}
 							</a>							
 							<div class="dropdown-menu dropdown-menu-right no-radius" aria-labelledby="navbarDropdown">
-								  <a class="dropdown-item text-dark" href="#"><i class="far fa-fw fa-comment-alt"></i> Pranešimai <span class="badge badge-info">18</span></a>
+								  <a class="dropdown-item text-dark" href="#"><i class="far fa-fw fa-comment-alt"></i> Pranešimai <span class="badge badge-secondary">18</span></a>
 								  <a class="dropdown-item text-dark" href="#"><i class="far fa-fw fa-calendar-alt"></i>Užsakymai</a>
 								  <a class="dropdown-item text-dark" href="#"><i class="fa fa-fw fa-user-circle"></i> Paskyra</a>								  
 								  <div class="dropdown-divider"></div>
