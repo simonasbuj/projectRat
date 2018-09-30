@@ -733,6 +733,7 @@ ul {
  ========================*/
 .wish{
 	width: 100% !important;
+	border: none;
 }
 .wish:hover{
 	cursor: pointer;
@@ -754,9 +755,16 @@ ul {
 	height: 2rem;
 	border: 1px solid rgba(0, 0, 0, 0.125);
 }
+.wish .card-body{
+	border-left: 1px solid rgba(0,0,0,.125);
+	border-right: 1px solid rgba(0,0,0,.125);
+}
 .wish .card-footer{
 	background-color: white;
 	border-top: none;
+	border-left: 1px solid rgba(0,0,0,.125);
+	border-right: 1px solid rgba(0,0,0,.125);
+	border-bottom: 1px solid rgba(0,0,0,.125);
 }
 
 .close:focus{
