@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout as django_logout
+from django.contrib.auth import logout as django_logout, authenticate, login as django_login
 from django.contrib.auth.models import User
 from .models import Info
 
@@ -32,4 +32,13 @@ def login_view(request):
     print(request.path)
     return redirect('library:index')
 
+def login_old_view(request):
+    if request.method == "POST":
+        username = request.POST.get("login_username")
+        password = request.POST.get("login_password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            django_login(request, user)
+
+    return redirect('library:index')
 

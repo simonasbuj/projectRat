@@ -223,6 +223,17 @@
 			</button>
 		  </div>
 		  <div class="modal-body">
+			<form method="POST" action="{% url 'accounts:login_old' %}">
+				{% csrf_token %}
+				<div class="form-group">
+					<input type="text" class="form-control" name="login_username" placeholder="Slapyvardis">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" name="login_password" placeholder="Slaptažodis">
+				</div>
+				<button class="btn btn-dark btn-dark-custom btn-block no-radius py-2">PRISIJUNGTI</button>
+			</form>
+			<hr>
 			<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-block no-radius py-2"><i class="fab fa-google"></i> Google</a>
 			<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-block no-radius py-2"><i class="fab fa-facebook-f"></i> Facebook</a>
 		  </div>
