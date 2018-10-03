@@ -7,3 +7,7 @@ admin.site.register(Writer)
 admin.site.register(Tag)
 admin.site.register(Category)
 admin.site.register(BookTags)
+
+#customization
+
+admin.site.site_header = 'Knygų Žiurkė Administracija'

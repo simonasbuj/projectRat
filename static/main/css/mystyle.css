@@ -795,7 +795,36 @@ ul {
 	-o-transition: color 0.3s ease;
 	transition: color 0.3s ease;
 }
-
 .xbtn:hover{
 	color: black;
+}
+#addWishAlert{
+	position: fixed;
+	top: 20vh;
+	width: 35%;
+	z-index: 100;
+	left: 50%;
+	/* transform: translateX(-50%); */
+	transform: translate(-50%, -20vh);
+    animation: 1s ease-out 0s 1 slideDown forwards;
+}
+
+
+/* MEDIA */
+
+ @media screen and (max-width: 950px) {
+	#addWishAlert{
+		width: 80%;
+	}
+  } 
+/* ANIMATIONS */
+@keyframes slideDown{
+	0%{
+		transform: translate(-50%, -20vh);		
+
+	}
+	100%{
+		transform: translate(-50%, 10vh);
+		
+	}
 }

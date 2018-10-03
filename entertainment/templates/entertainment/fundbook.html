@@ -143,6 +143,9 @@
                 <form action="{% url 'entertainment:addwish' %}" method="POST">{% csrf_token %}
                     <div class="form-group">                        
                         <input type="text" class="form-control"  name="bookName" placeholder="Knygos pavadinimas" onchange="removeInvalid(this)">
+                        <div class="invalid-feedback">
+                            Nebejuokink. Bet kam aišku, kad pavadinimas yra būtinas...
+                        </div> 
                     </div>
                     <div class="container-fluid px-0" >
                         <!--<h6 class="text-muted">Galbūt mes jau turime šia knygą?</h6>-->
@@ -155,7 +158,7 @@
                         </div>             
                     </div>
                     <div class="form-group mb-1">                        
-                        <input type="text" class="form-control"  name="writers" placeholder="Autoriaus vardas ir pavardė" onchange="removeInvalid(this)">                        
+                        <input type="text" class="form-control"  name="writers" placeholder="Autoriaus vardas ir pavardė" onchange="removeInvalid(this)" autocomplete="off">                        
                     </div>
                     <div class="container px-0" id="writersDiv">
                     </div>
@@ -170,8 +173,11 @@
                     <div class="form-group mr-auto">                        
                         <input type="text" class="form-control"  name="publisher" placeholder="Leidykla (nebūtina)">                        
                     </div>
-                    <div class="form-group mr-auto">                        
-                            <textarea class="form-control" rows="5" name="newWishComment" placeholder="Kodėl nori šios knygos?&#10;Kuom ji bus naudinga kitiems skaitytojams?" onchange="removeInvalid(this)"></textarea>                        
+                    <div class="form-group mr-auto">                       
+                            <textarea class="form-control" rows="5" name="newWishComment" placeholder="Kodėl nori šios knygos?&#10;Kuom ji bus naudinga kitiems skaitytojams?" onchange="removeInvalid(this)"></textarea>
+                            <div class="invalid-feedback">
+                                Aprašymas yra privalomas ir negali būti toks trumpas
+                            </div>                       
                     </div>
 
                 
@@ -208,6 +214,27 @@
                   </div>
     </div>
 </div>
+
+<!-- ALERTAI -->
+{% if success %}
+    <div class="alert alert-success alert-dismissible fade show" id="addWishAlert" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="alert-heading">PAVYKO!</h4>
+        <p>Jūsų prašymas buvo užregistruotas sėkmingai ir perduotas bibliotekos darbuotojams. Įvertinus prašymą, bus nustatyta knygos numatoma kaina ir prašymą galėsite išvysti šiame puslapyje.</p>
+        <hr>
+        <p class="mb-0">Jeigu prašymas nėra korektiškas jis bus pašalintas &#x1F612.</p>
+    </div>
+{% endif %}
+
+{% if error %}
+    <div class="alert alert-danger alert-dismissible fade show" id="addWishAlert" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="alert-heading">O VAU!</h4>
+        <p>Žiurkė sugraužė laidus! Bandykite sukurti prašymą dar kartą.</p>
+        <hr>
+        <p class="mb-0">Jeigu prašymo nepavyksta pridėti ir toliau, informuokite bibliotekos darbuotojus.</p>
+    </div>
+{% endif %}
 
 {% endblock content %}
 
