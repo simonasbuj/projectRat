@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, generics, filters
 from library.models import Book
 from .serializers import BookSerializer
+from unidecode import unidecode
 
 # Create your views here.
 class BookView(viewsets.ModelViewSet):
@@ -16,4 +17,5 @@ class SearchBooksView(generics.ListAPIView):
 
     def get_queryset(self):
         keyword = self.kwargs['keyword']
+        keyword = unidecode(keyword.strip())
         return Book.objects.filter(slug__icontains=keyword.replace(" ", "-"))

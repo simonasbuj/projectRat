@@ -114,13 +114,24 @@
     </div>
 </div>
 
+
+
 <!-- new wish button and modal -->
+{% if user.is_authenticated %}
 <button id="newWishBtn" type="button" class="btn btn-secondary btn-circle btn-xl" data-toggle='popover' data-trigger='hover' data-content='Paprašyk naujos knygos' data-placement='top' >
     <i class="fas fa-plus"></i>
 </button>
+{% else %}
+<span id="newWishBtn" data-toggle='popover' data-trigger='hover' data-content='Paprašyk naujos knygos' data-placement='top' >
+    <button  type="button" class="btn btn-secondary btn-circle btn-xl" data-toggle="modal" data-target="#exampleModal">
+        <i class="fas fa-plus"></i>
+    </button>
+</span>
+{% endif %}
 
+{% if user.is_authenticated %}
 <div class="modal fade" id="newWishModal" tabindex="-1" role="dialog" aria-labelledby="newWishModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kokią knygą norėtum išvysti bibliotekoje?</h5>
@@ -128,18 +139,25 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="" method="POST">
+            <div class="modal-body pb-0">
+                <form action="{% url 'entertainment:addwish' %}" method="POST">{% csrf_token %}
                     <div class="form-group">                        
-                        <input type="text" class="form-control"  name="bookName" placeholder="Knygos pavadinimas">
+                        <input type="text" class="form-control"  name="bookName" placeholder="Knygos pavadinimas" onchange="removeInvalid(this)">
+                    </div>
+                    <div class="container-fluid px-0" >
+                        <!--<h6 class="text-muted">Galbūt mes jau turime šia knygą?</h6>-->
+                        <div class="row pl-3" id="bookSuggestions">
+{% comment %}                             <div class="col-3 mb-2 pl-0">
+                                <a href="#">
+                                    <img class="w-100 book" src="/static/img/no_cover.jpg" data-toggle='popover' data-trigger='hover' data-content='Pavadinimas' data-placement='top'>
+                                </a>
+                            </div>  {% endcomment %}                          
+                        </div>             
                     </div>
                     <div class="form-group mb-1">                        
-                        <input type="text" class="form-control"  name="writers" placeholder="Autoriaus vardas ir pavardė">                        
+                        <input type="text" class="form-control"  name="writers" placeholder="Autoriaus vardas ir pavardė" onchange="removeInvalid(this)">                        
                     </div>
                     <div class="container px-0" id="writersDiv">
-                        <div class="form-group mb-1">   
-                            <input type="text" class="form-control"  name="writers" placeholder="Autoriaus vardas ir pavardė">            
-                        </div>
                     </div>
                     <div class="form-group py-1" style="overflow: hidden;">
                         <button type="button" class="btn btn-secondary btn-circle float-right mr-2" id="newWriterBtn" data-toggle='popover' data-trigger='hover' data-content='Pridėti autorių' data-placement='top' >
@@ -147,20 +165,27 @@
                         </button>
                     </div>
                     <div class="form-group mr-auto">                        
-                            <input type="text" class="form-control"  name="ISBN" placeholder="ISBN kodas">                        
+                            <input type="text" class="form-control"  name="releaseDate" placeholder="Leidimo metai (nebūtina)">                        
+                    </div>
+                    <div class="form-group mr-auto">                        
+                        <input type="text" class="form-control"  name="publisher" placeholder="Leidykla (nebūtina)">                        
+                    </div>
+                    <div class="form-group mr-auto">                        
+                            <textarea class="form-control" rows="5" name="newWishComment" placeholder="Kodėl nori šios knygos?&#10;Kuom ji bus naudinga kitiems skaitytojams?" onchange="removeInvalid(this)"></textarea>                        
                     </div>
 
-                </form>
+                
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-primary mr-auto">Išsaugoti</button>
                 <button type="button" class="btn btn-secondary " data-dismiss="modal">Atšaukti</button> -->
-                <button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> Sukurti prašymą</button>               
+                <button type="submit" id="newWishFormBtn" class="btn btn-dark"><i class="fas fa-plus"></i> Sukurti prašymą</button>   
+            </form>            
             </div>
         </div>
     </div>
 </div>
-
+{% endif %}
 <!-- info modal -->
 <div class="modal fade bd-example-modal-lg" id="wishInfoModal" tabindex="-1" role="dialog" aria-labelledby="wishInfoModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -192,15 +217,9 @@
     $( document ).ready(function() {
         $('[data-toggle="popover"]').popover(); //kad veiktu popover
         openWishInfo()
-        openNewWish()
         //addWritter()
         
-        $("#newWriterBtn").on("click", function(){
-            console.log( $("input[name=writers]") )
-            html = "<div class='form-group mb-1'><input type='text' class='form-control'  name='writers' placeholder='Autoriaus vardas ir pavardė'></div>"
-            $(html).hide().appendTo(writersDiv).fadeIn(1000)
-
-        }) 
+ 
     });
 
     //atidaro wishinfomodal ir pakeicia duomenis
@@ -210,15 +229,6 @@
             $('#wishInfoModal').modal()
         })
     }
-
-    //atidaro newWish formos modal
-    function openNewWish(){
-        $("#newWishBtn").click(function(e){
-            console.log("atidaryti")
-            $('#newWishModal').modal()
-        })
-    }
-
     //prideda formos lauką naujam autoriui
     /*function addWritter(){
 
@@ -243,4 +253,5 @@
 
 
 </script>
+<script src="{% static 'entertainment/js/newWish.js' %}"></script>
 {% endblock javascript %}
