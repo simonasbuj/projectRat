@@ -173,5 +173,7 @@ def comment(request, slug):
         print("nepaeis")
         return redirect(book)
 
+def landing(request):
+    return render(request, 'library/landing.html')
 
 

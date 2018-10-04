@@ -24,13 +24,13 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('u/', include('accounts.urls')), #user accounts
-    path('', include('library.urls')),
+    
     #path('', include('accounts.urls')),
     path('', include('entertainment.urls')),
     path('auth/', include('social_django.urls', namespace='social')), #social auth
 
     path('api/', include('api.urls')),
-
+    path('', include('library.urls')),
 ]
 
 #kad rodytu foto
