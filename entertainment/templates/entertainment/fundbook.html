@@ -10,103 +10,41 @@
 <div class="row">
     <div class="col-sm-12 col-md-8">
         <div class="row">
+
+            {% for wish in wishes %}
             <div class="col-xl-3 col-lg-4 col-md-6 d-flex pb-3">
-                <div class="card wish">
+                <div class="card wish" wish_id="{{ wish.id }}">
                     <h5 class="card-header">
-                        Liko 25 d.
+                        Liko {{ wish.get_timeleft }} d.
                         <span class="badge badge-secondary float-right" data-toggle='popover' data-trigger='hover' data-content='Patiko 85 zmonems' data-placement='top'><i class="fas fa-heart"></i> 89</span>
                     </h5>
                     <div class="card-body text-center pb-0">
-                      <img src="https://i0.wp.com/pulptastic.com/wp-content/uploads/2014/12/cute-reptiles-107__700.jpg?w=662" alt="ayoo">
-                      <h5 class="card-title mt-2">Aplink pasaulį per 50 dienų</h5>
-                      <p class="card-text">Šios knygos norejau jau šimtą metų. Gerasis knygnešį, padėk man.</p>
+                      <img src="{{ wish.created_by.info.avatar_url }}" alt="ayoo">
+                      <h5 class="card-title mt-2">{{ wish.title }}</h5>
+                      <p class="card-text">{{ wish.description }}</p>
                     </div>
                     <div class="card-footer">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> 15/30 EUR</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="width: 40%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="{{ wish.price }}"> 3/{{ wish.price }} EUR</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-xl-3 col-lg-4 col-md-6 d-flex pb-3">
-                    <div class="card wish">
-                        <h5 class="card-header ">Liko 28 d. <span class="badge badge-secondary float-right"><i class="fas fa-heart"></i> 25</span></h5>
-                        <div class="card-body text-center pb-0">
-                            <img src="https://img.freepik.com/free-vector/cute-animal-doing-dabbing_23-2147847948.jpg?size=338&ext=jpg" alt="ayoo">
-                            <h5 class="card-title mt-2">Tango with Django</h5>
-                            <p class="card-text">Reikia sitos knygos mokslams. bus naudinga visiems</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"> 24/36 EUR</div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-4 col-md-6 d-flex pb-3">
-                    <div class="card wish">
-                        <h5 class="card-header ">
-                            Liko 31 d.
-                            <span class="badge badge-secondary float-right"><i class="fas fa-heart"></i> 68</span>
-                        </h5>
-                        <div class="card-body text-center pb-0">
-                            <img src="https://gifer.com/i/7PUr.gif" alt="ayoo">
-                            <h5 class="card-title mt-2">Antulis Donaldas the Book</h5>
-                            <p class="card-text">Tokia linxma, kad net norisi nemokamai gauti ir perskaityti.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary text-dark" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> 0/15 EUR</div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 d-flex pb-3">
-                    <div class="card wish">
-                        <h5 class="card-header ">Liko 28 d.</h5>
-                        <div class="card-body text-center pb-0">
-                            <img src="https://img.freepik.com/free-vector/cute-animal-doing-dabbing_23-2147847948.jpg?size=338&ext=jpg" alt="ayoo">
-                            <h5 class="card-title mt-2">Tango with Django</h5>
-                            <p class="card-text">Reikia sitos knygos mokslams. bus naudinga visiems</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"> 24/36 EUR</div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 d-flex pb-3">
-                    <div class="card wish">
-                        <h5 class="card-header ">
-                            Liko 31 d.
-                            <span class="badge badge-secondary float-right"><i class="fas fa-heart"></i> 6</span>
-                        </h5>
-                        <div class="card-body text-center pb-0">
-                            <img src="https://img.freepik.com/free-vector/cute-animal-doing-dabbing_23-2147847948.jpg?size=338&ext=jpg" alt="ayoo">
-                            <h5 class="card-title mt-2">Tango with Django</h5>
-                            <p class="card-text">Reikia sitos knygos mokslams. bus naudinga visiems</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"> 24/36 EUR</div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
+            {% endfor %}
 
         </div>
         <nav aria-label="...">
                 <ul class="pagination pagination-lg">
-                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item active"><a class="page-link " href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                        {% for page in wishes.paginator.page_range %}
+                        {% if page == wishes.number %}
+                            <li class="page-item active"><a class="page-link " href="?p={{ page }}">{{ page }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link " href="?p={{ page }}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
               </nav><!-- /pagination -->
+
 
     </div><!-- /column left-->
     <div class="col-sm-12 col-md-4">
@@ -132,7 +70,7 @@
 {% if user.is_authenticated %}
 <div class="modal fade" id="newWishModal" tabindex="-1" role="dialog" aria-labelledby="newWishModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content no-radius">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kokią knygą norėtum išvysti bibliotekoje?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -193,9 +131,9 @@
 </div>
 {% endif %}
 <!-- info modal -->
-<div class="modal fade bd-example-modal-lg" id="wishInfoModal" tabindex="-1" role="dialog" aria-labelledby="wishInfoModal" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg " id="wishInfoModal" tabindex="-1" role="dialog" aria-labelledby="wishInfoModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div class="modal-content no-radius">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Liko 25 d.</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -208,8 +146,8 @@
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Atgal</button>
+                      <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                     </div>
                   </div>
     </div>
@@ -243,19 +181,13 @@
 <script>
     $( document ).ready(function() {
         $('[data-toggle="popover"]').popover(); //kad veiktu popover
-        openWishInfo()
         //addWritter()
         
  
     });
 
     //atidaro wishinfomodal ir pakeicia duomenis
-    function openWishInfo(){
-        $(".wish").click(function(e) {
-            console.log("paspaudei wishh")
-            $('#wishInfoModal').modal()
-        })
-    }
+
     //prideda formos lauką naujam autoriui
     /*function addWritter(){
 
@@ -281,4 +213,5 @@
 
 </script>
 <script src="{% static 'entertainment/js/newWish.js' %}"></script>
+<script src="{% static 'entertainment/js/viewWish.js' %}"></script>
 {% endblock javascript %}
