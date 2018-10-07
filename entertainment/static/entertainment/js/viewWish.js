@@ -1,5 +1,8 @@
 //VARIABLES
-wishModal = $('#wishInfoModal');
+var wishModal = $('#wishInfoModal');
+var rangeValue = $("#rangeValue");
+var mySlider = document.getElementById("paymentRange");
+var paymentForm = document.getElementById("paymentForm");
 
 var lastViewedWish = 0;
 
@@ -19,8 +22,19 @@ function viewWish(){
             }
         })
         .then((data) => {
-            console.log(data);
-            wishModal.find(".modal-body").html("WISH ID: " + data.id + "<br>WISH PRICE: " + data.price);
+            /* wishModal.find(".modal-body").find(".row").html("WISH ID: " + data.id + "<br>WISH PRICE: " + data.price); */
+            wishModal.find("#wishcontent").html("WISH ID: " + data.id + "<br>WISH PRICE: " + data.price);
+
+
+            //SLIDERIS
+            var maxAmount = parseFloat(Math.round((data.price - data.donated) * 100) / 100).toFixed(2);
+            console.log("MAX AMOUNT: " + maxAmount);
+            mySlider.max = maxAmount;
+            mySlider.value = maxAmount;
+            rangeValue.html(maxAmount);            
+
+            //select comments tab to be active and show modal
+            $('#pills-comments-tab').tab('show');
             wishModal.modal();
         })
         .catch(function(error){
@@ -39,13 +53,38 @@ function viewWish(){
         wishModal.modal();
     }
 
-    
+}
 
+//this function shows amount on range change
+function showAmount(value){
+    rangeValue.html(parseFloat(Math.round(value * 100) / 100).toFixed(2));
+}
+
+function processPayment(){
+    console.log("STRIPE FOR: " + mySlider.value * 100);
+    nameField = paymentForm.elements["payerFirstName"];
+    lastnameField = paymentForm.elements["payerLastName"];
+    if(nameField){
+        var isValid = true;
+        if(nameField.value == null || nameField.value == ""){
+            nameField.classList.add("is-invalid");
+            isValid = false;
+        }
+        if(lastnameField.value == null || lastnameField.value == ""){
+            lastnameField.classList.add("is-invalid");
+            isValid = false;
+        }
+        if(!isValid) return;
+    }
+    
+    console.log("PAYMENT RPOCESSING");
+    
 }
 
 
 //EVENT LISTENERS
 $(".wish").on("click", viewWish);
+$("#stripeBtn").on("click", processPayment);
 
 /* function openWishInfo(){
     $(".wish").click(function(e) {

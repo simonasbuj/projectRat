@@ -12,7 +12,7 @@
         <div class="row">
 
             {% for wish in wishes %}
-            <div class="col-xl-3 col-lg-4 col-md-6 d-flex pb-3">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex pb-3">
                 <div class="card wish" wish_id="{{ wish.api_url }}">
                     <h5 class="card-header">
                         Liko {{ wish.get_timeleft }} d.
@@ -141,17 +141,74 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <div class="row">
+                        <div class="row" id="wishcontent">
 
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Atgal</button>
-                      <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                    </div>
-                  </div>
-    </div>
+                        </div>
+                      <div class="row">
+                        <!-- TABS -->
+                        <div class="col-12 px-0">
+                            <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-comments-tab" data-toggle="pill" href="#pills-comments" role="tab" aria-controls="pills-comments" aria-selected="true">Komentarai  <i class="far fa-comments"></i></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-payment-tab" data-toggle="pill" href="#pills-payment" role="tab" aria-controls="pills-payment" aria-selected="false">Prisidėk <i class="fas fa-hand-holding-usd"></i></a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent">
+                                <!-- Komentarai -->
+                                <div class="tab-pane fade show active" id="pills-comments" role="tabpanel" aria-labelledby="pills-home-tab">
+                                    <div class="row align-items-center">
+                                        <div class="col-sm-12 text-center py-5">
+                                            <h1 class="text-muted py-5">Coming soon... 2022</h1>
+                                        </div>                                
+                                    </div>
+                                </div><!-- /Komentarai -->
+                                <!-- Apmokejimas -->
+                                <div class="tab-pane fade" id="pills-payment" role="tabpanel" aria-labelledby="pills-payment-tab">
+                                    <div class="row align-items-center">
+                                            <div class="col-sm-12 text-center py-5">
+                                                <form action="#" method="POST" id="paymentForm">{% csrf_token %}                                             
+                                                {% if not user.is_authenticated %}                                              
+                                                    
+                                                    <div class="form-group mb-2 ml-auto mr-auto w-50">                        
+                                                        <input type="text" class="form-control" name="payerFirstName" placeholder="Jūsų vardas*" onchange="removeInvalid(this)"> 
+                                                        <div class="invalid-feedback">
+                                                            Būtina užpildyti
+                                                        </div>                       
+                                                    </div>
+                                                    <div class="form-group mb-3 ml-auto mr-auto w-50">
+                                                        <input type="text" class="form-control" name="payerLastName" placeholder="Jūsų pavardė*" onchange="removeInvalid(this)">
+                                                        <div class="invalid-feedback">
+                                                            Būtina užpildyti
+                                                        </div>
+                                                    </div>
+                                                
+                                                
+                                                {% endif %}
+                                                </form>
+                                                <input type="range" min="1" max="100" value="50" step="0.01" class="slider" id="paymentRange" oninput="showAmount(this.value);" name="payAmount"><br>
+                                                <button class="btn btn-dark px-5 my-2" id="stripeBtn"><h3 class="mb-0">PERVESTI: <span id="rangeValue"></span> EUR</h3></button><br>
+                                                <small class="text-muted">Jeigu nebus surinkta pakankamai pinigų iki prašymo galiojimo pabaigos, pervesti pinigai bus grąžinami į jūsų kreditinę kortelę.</small>
+                                               
+                                            </div>
+                                        </div>                                
+                                    </div><!-- /Apmokejimas -->
+                                </div><!-- /tab-content-->
+                            </div><!--/col-->
+
+                        </div><!-- /ROW -->
+
+                      </div><!--/MODAL BODY-->
+                      <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Atgal</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                          </div>
+                    </div><!--/modal-content-->
+
+                </div>
 </div>
+
 
 <!-- ALERTAI -->
 {% if success %}

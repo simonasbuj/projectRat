@@ -805,7 +805,7 @@ ul {
 	z-index: 100;
 	left: 50%;
 	/* transform: translateX(-50%); */
-	transform: translate(-50%, -20vh);
+	transform: translate(-50%, -10vh);
     animation: 1s ease-out 0s 1 slideDown forwards;
 }
 
@@ -821,17 +821,27 @@ ul {
 	animation: 1s ease-out 0s 1 slideDown forwards;
 }
 
+#paymentRange{
+	width: 50%;
+}
+
 /* MEDIA */
 
  @media screen and (max-width: 950px) {
 	#addWishAlert{
 		width: 80%;
 	}
+	#paymentForm .form-group{
+		width: 75% !important;
+	}
+	#paymentRange{
+		width: 75% !important;
+	}	
   } 
 /* ANIMATIONS */
 @keyframes slideDown{
 	0%{
-		transform: translate(-50%, 20vh);		
+		transform: translate(-50%, -20vh);		
 
 	}
 	100%{
