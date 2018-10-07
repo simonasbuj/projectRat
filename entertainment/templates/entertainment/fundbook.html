@@ -13,7 +13,7 @@
 
             {% for wish in wishes %}
             <div class="col-xl-3 col-lg-4 col-md-6 d-flex pb-3">
-                <div class="card wish" wish_id="{{ wish.id }}">
+                <div class="card wish" wish_id="{{ wish.api_url }}">
                     <h5 class="card-header">
                         Liko {{ wish.get_timeleft }} d.
                         <span class="badge badge-secondary float-right" data-toggle='popover' data-trigger='hover' data-content='Patiko 85 zmonems' data-placement='top'><i class="fas fa-heart"></i> 89</span>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="width: 40%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="{{ wish.price }}"> 3/{{ wish.price }} EUR</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary {% if wish.get_goal_percent < 10 %} text-dark {% endif %}" role="progressbar" style="width: {{ wish.get_goal_percent }}%" aria-valuenow="{{ wish.get_transaction_sum }}" aria-valuemin="0" aria-valuemax="{{ wish.price }}"> {{ wish.get_transaction_sum }}/{{ wish.price }} EUR</div>
                         </div>
                     </div>
                 </div>
@@ -173,6 +173,12 @@
         <p class="mb-0">Jeigu prašymo nepavyksta pridėti ir toliau, informuokite bibliotekos darbuotojus.</p>
     </div>
 {% endif %}
+
+<!-- <div class="alert alert-danger alert-dismissible fade show" id="myAlert" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="alert-heading">KLAIDA!</h4>
+    <p>Žiurkė sugraužė laidus! Bandykite perkrauti puslapį.</p>
+</div> -->
 
 {% endblock content %}
 

@@ -7,3 +7,5 @@ from django.utils import timezone
 def refund(sender, instance, **kwargs):
     if instance.status == 'c':
         print("REFUNDINSIM CHARGUS VISUS")
+        print("PRIEZASITS: " + instance.admin_comment)
+        

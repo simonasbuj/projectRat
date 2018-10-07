@@ -809,6 +809,17 @@ ul {
     animation: 1s ease-out 0s 1 slideDown forwards;
 }
 
+#myAlert{
+	position: fixed;
+	left: 50%;
+	transform: translate(-50%, -80px);
+	/* animation: 1s ease-out 0s 1 slideDown forwards; */
+	z-index: 100;
+}
+
+#myAlert.slide{
+	animation: 1s ease-out 0s 1 slideDown forwards;
+}
 
 /* MEDIA */
 
@@ -820,11 +831,20 @@ ul {
 /* ANIMATIONS */
 @keyframes slideDown{
 	0%{
-		transform: translate(-50%, -20vh);		
+		transform: translate(-50%, 20vh);		
 
 	}
 	100%{
-		transform: translate(-50%, 10vh);
+		transform: translate(-50%, -10vh);
 		
+	}
+}
+
+@keyframes alertSlideUp{
+	0%{
+		transform: translate(-50%, 20vh);
+	}
+	100%{
+		transform: translate(-50%, -20px);
 	}
 }
