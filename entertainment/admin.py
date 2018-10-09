@@ -14,9 +14,11 @@ class TransactionAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'is_refunded',)
     #fields order in admin form view
     fields = ('charge_id', 'amount', 'email', 'created_at', 'is_refunded', 'refunded_at', 'firstname', 'lastname', 'user', 'wish')
-    readonly_fields = ['created_at', 'is_refunded', 'refunded_at']
+    readonly_fields = ['created_at', 'is_refunded', 'refunded_at', 'amount', 'email', 'charge_id', 'firstname', 'lastname', 'user']
+
+    #Remove delete action from transaction model
+    def has_delete_permission(self, request, obj=None):
+        return False
 
     def custom_name(self, obj):
         return obj.get_formated_date
-
-

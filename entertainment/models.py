@@ -66,7 +66,7 @@ class Wish(models.Model):
 
     @property
     def api_url(self):
-        return reverse('api:wish-detail', kwargs={'pk':self.id})   
+        return reverse('api:wish-detail', kwargs={'pk':self.id})
 
 
 class Transaction(models.Model):
@@ -78,12 +78,13 @@ class Transaction(models.Model):
     refunded_at = models.DateTimeField(null=True, blank=True)
     firstname = models.CharField(max_length=50, null=True, blank=True)
     lastname = models.CharField(max_length=50, null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True) 
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     wish = models.ForeignKey(Wish, on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'transactions'
         ordering = ['-refunded_at', '-created_at']
+        verbose_name_plural = "Pervedimai"
 
     def __str__(self):
         return self.wish.title
@@ -91,4 +92,3 @@ class Transaction(models.Model):
     @property
     def get_formated_date(self):
         return self.created_at.astimezone(to_tz).strftime('%Y-%m-%d %H:%M:%S')
-    

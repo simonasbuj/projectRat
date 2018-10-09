@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from library.models import Writer
-from .models import Wish
+from .models import Wish, Transaction
 
 from django.utils.text import slugify
 from datetime import timedelta
@@ -8,6 +8,12 @@ from django.utils import timezone
 
 #pagination
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
+#stripe
+from django.conf import settings
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 #for tests
 from django.http import HttpResponse
@@ -43,7 +49,7 @@ def addwish(request):
         publisher =  None if not request.POST.get('publisher') else request.POST.get('publisher')
         description = request.POST.get('newWishComment')
         wish = Wish.objects.create(title=title, publish_date=releaseDate, description=description, publisher=publisher, created_by=request.user)
-        
+
 
         for writer in writers:
             writer_lastname = ""
@@ -64,4 +70,37 @@ def addwish(request):
         request.session['newWishSuccess'] = False
         return redirect('entertainment:fundbook')
 
-    
+def payment(request):
+    if request.method == 'POST':
+        payerFirstName = None if not request.POST.get('payerFirstName') else request.POST.get('payerFirstName')
+        payerLastName = None if not request.POST.get('payerLastName') else request.POST.get('payerLastName')
+        user = None if not request.user.is_authenticated else request.user
+        wish_id = request.POST.get('wish_id')
+        amount = float(request.POST.get('amount'))
+        stripe_token = request.POST.get('stripe_token')
+        email = request.POST.get('email')
+
+        wish = get_object_or_404(Wish, id=wish_id)
+
+        ##charge payment and save transaction
+        response = stripe.Charge.create(
+            amount = int(amount * 100),
+            currency = 'eur',
+            source = stripe_token,
+            description = "Pervedimas prašymui ID: " + str(wish.id) + " PAVADINIMAS: " + wish.title,
+            receipt_email = email
+        )
+
+        Transaction.objects.create(
+            charge_id = response['id'],
+            amount = float(response['amount']/100),
+            email = email,
+            firstname = payerFirstName,
+            lastname = payerLastName,
+            user = user,
+            wish = wish
+        )
+
+        return HttpResponse("OK<br>NORAS: " + str(wish.id) + " " + wish.title + "<br>CHARGE ID: " + response['id'] + "<br>AMOUNT: " + str(float(response['amount']/100)) + " EUR<br>EMAIL: " + email)
+    else:
+        return redirect('entertainment:fundbook')

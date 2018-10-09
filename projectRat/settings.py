@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     #rest api framework
     'rest_framework',
 
+    #stripe
+    'stripe',
+
     #myapps
     'library',
     'accounts',
@@ -162,7 +165,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_files')
 #additional dirs to look for static files
 #its not even working
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static/main"),    
+    os.path.join(BASE_DIR, "static/main"),
 ]
 
 #login logout
@@ -187,6 +190,14 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'SAJZ3FqIppoSdPx9HX-Ufleu'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '889491574575981'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'c03b68b5bd242f6b0201f56f4b0656d3'  # App Secret
+
+#STRIPE APIE KEY AND SECRET
+if DEBUG:
+    STRIPE_PUBLISHABLE_KEY = 'pk_test_YuNvTsnJ7v1s9FCREZfVOeeK'
+    STRIPE_SECRET_KEY = 'sk_test_Utq3XjRrMtIVQFCQpLd5Ibln'
+else:
+    STRIPE_PUBLISHABLE_KEY = 'pk_test_YuNvTsnJ7v1s9FCREZfVOeeK'
+    STRIPE_SECRET_KEY = 'sk_test_Utq3XjRrMtIVQFCQpLd5Ibln'
 
 
 #when going live this is important for Facebook login :d;d;

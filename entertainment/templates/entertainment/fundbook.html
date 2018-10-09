@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'library:index' %}">Knygnešys</a></li>           
+    <li class="breadcrumb-item"><a href="{% url 'library:index' %}">Knygnešys</a></li>
 {% endblock breadcrumb %}
 {% block breadcrumbinfo %}Pasiūlyk kokią knygą norėtum išvysti bibliotekoje arba padovanok knygą bibliotekai{% endblock breadcrumbinfo %}
 
@@ -25,7 +25,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary {% if wish.get_goal_percent < 10 %} text-dark {% endif %}" role="progressbar" style="width: {{ wish.get_goal_percent }}%" aria-valuenow="{{ wish.get_transaction_sum }}" aria-valuemin="0" aria-valuemax="{{ wish.price }}"> {{ wish.get_transaction_sum }}/{{ wish.price }} EUR</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary {% if wish.get_goal_percent < 40 %} text-dark {% endif %}" role="progressbar" style="width: {{ wish.get_goal_percent }}%" aria-valuenow="{{ wish.get_transaction_sum }}" aria-valuemin="0" aria-valuemax="{{ wish.price }}"> {{ wish.get_transaction_sum }}/{{ wish.price }} EUR</div>
                         </div>
                     </div>
                 </div>
@@ -79,11 +79,11 @@
             </div>
             <div class="modal-body pb-0">
                 <form action="{% url 'entertainment:addwish' %}" method="POST">{% csrf_token %}
-                    <div class="form-group">                        
+                    <div class="form-group">
                         <input type="text" class="form-control"  name="bookName" placeholder="Knygos pavadinimas" onchange="removeInvalid(this)">
                         <div class="invalid-feedback">
                             Nebejuokink. Bet kam aišku, kad pavadinimas yra būtinas...
-                        </div> 
+                        </div>
                     </div>
                     <div class="container-fluid px-0" >
                         <!--<h6 class="text-muted">Galbūt mes jau turime šia knygą?</h6>-->
@@ -92,11 +92,11 @@
                                 <a href="#">
                                     <img class="w-100 book" src="/static/img/no_cover.jpg" data-toggle='popover' data-trigger='hover' data-content='Pavadinimas' data-placement='top'>
                                 </a>
-                            </div>  {% endcomment %}                          
-                        </div>             
+                            </div>  {% endcomment %}
+                        </div>
                     </div>
-                    <div class="form-group mb-1">                        
-                        <input type="text" class="form-control"  name="writers" placeholder="Autoriaus vardas ir pavardė" onchange="removeInvalid(this)" autocomplete="off">                        
+                    <div class="form-group mb-1">
+                        <input type="text" class="form-control"  name="writers" placeholder="Autoriaus vardas ir pavardė" onchange="removeInvalid(this)" autocomplete="off">
                     </div>
                     <div class="container px-0" id="writersDiv">
                     </div>
@@ -105,26 +105,26 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <div class="form-group mr-auto">                        
-                            <input type="text" class="form-control"  name="releaseDate" placeholder="Leidimo metai (nebūtina)">                        
+                    <div class="form-group mr-auto">
+                            <input type="text" class="form-control"  name="releaseDate" placeholder="Leidimo metai (nebūtina)">
                     </div>
-                    <div class="form-group mr-auto">                        
-                        <input type="text" class="form-control"  name="publisher" placeholder="Leidykla (nebūtina)">                        
+                    <div class="form-group mr-auto">
+                        <input type="text" class="form-control"  name="publisher" placeholder="Leidykla (nebūtina)">
                     </div>
-                    <div class="form-group mr-auto">                       
+                    <div class="form-group mr-auto">
                             <textarea class="form-control" rows="5" name="newWishComment" placeholder="Kodėl nori šios knygos?&#10;Kuom ji bus naudinga kitiems skaitytojams?" onchange="removeInvalid(this)"></textarea>
                             <div class="invalid-feedback">
                                 Aprašymas yra privalomas ir negali būti toks trumpas
-                            </div>                       
+                            </div>
                     </div>
 
-                
+
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-primary mr-auto">Išsaugoti</button>
                 <button type="button" class="btn btn-secondary " data-dismiss="modal">Atšaukti</button> -->
-                <button type="submit" id="newWishFormBtn" class="btn btn-dark"><i class="fas fa-plus"></i> Sukurti prašymą</button>   
-            </form>            
+                <button type="submit" id="newWishFormBtn" class="btn btn-dark"><i class="fas fa-plus"></i> Sukurti prašymą</button>
+            </form>
             </div>
         </div>
     </div>
@@ -135,7 +135,7 @@
     <div class="modal-dialog modal-lg">
             <div class="modal-content no-radius">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Liko 25 d.</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Liko <span id="timeLeft"></span> d.</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -161,21 +161,21 @@
                                     <div class="row align-items-center">
                                         <div class="col-sm-12 text-center py-5">
                                             <h1 class="text-muted py-5">Coming soon... 2022</h1>
-                                        </div>                                
+                                        </div>
                                     </div>
                                 </div><!-- /Komentarai -->
                                 <!-- Apmokejimas -->
                                 <div class="tab-pane fade" id="pills-payment" role="tabpanel" aria-labelledby="pills-payment-tab">
                                     <div class="row align-items-center">
                                             <div class="col-sm-12 text-center py-5">
-                                                <form action="#" method="POST" id="paymentForm">{% csrf_token %}                                             
-                                                {% if not user.is_authenticated %}                                              
-                                                    
-                                                    <div class="form-group mb-2 ml-auto mr-auto w-50">                        
-                                                        <input type="text" class="form-control" name="payerFirstName" placeholder="Jūsų vardas*" onchange="removeInvalid(this)"> 
+                                                <form action="{% url 'entertainment:payment' %}" method="POST" id="paymentForm">{% csrf_token %}
+                                                {% if not user.is_authenticated %}
+
+                                                    <div class="form-group mb-2 ml-auto mr-auto w-50">
+                                                        <input type="text" class="form-control" name="payerFirstName" placeholder="Jūsų vardas*" onchange="removeInvalid(this)">
                                                         <div class="invalid-feedback">
                                                             Būtina užpildyti
-                                                        </div>                       
+                                                        </div>
                                                     </div>
                                                     <div class="form-group mb-3 ml-auto mr-auto w-50">
                                                         <input type="text" class="form-control" name="payerLastName" placeholder="Jūsų pavardė*" onchange="removeInvalid(this)">
@@ -183,16 +183,16 @@
                                                             Būtina užpildyti
                                                         </div>
                                                     </div>
-                                                
-                                                
+
+
                                                 {% endif %}
                                                 </form>
                                                 <input type="range" min="1" max="100" value="50" step="0.01" class="slider" id="paymentRange" oninput="showAmount(this.value);" name="payAmount"><br>
                                                 <button class="btn btn-dark px-5 my-2" id="stripeBtn"><h3 class="mb-0">PERVESTI: <span id="rangeValue"></span> EUR</h3></button><br>
                                                 <small class="text-muted">Jeigu nebus surinkta pakankamai pinigų iki prašymo galiojimo pabaigos, pervesti pinigai bus grąžinami į jūsų kreditinę kortelę.</small>
-                                               
+
                                             </div>
-                                        </div>                                
+                                        </div>
                                     </div><!-- /Apmokejimas -->
                                 </div><!-- /tab-content-->
                             </div><!--/col-->
@@ -245,8 +245,8 @@
     $( document ).ready(function() {
         $('[data-toggle="popover"]').popover(); //kad veiktu popover
         //addWritter()
-        
- 
+
+
     });
 
     //atidaro wishinfomodal ir pakeicia duomenis
@@ -255,7 +255,7 @@
     /*function addWritter(){
 
         let writersDiv = $("#writersDiv")
-        
+
         $("#newWriterBtn").click(function(e){
             let writerName = $("input[name=writers]")
             if(!writerName.last().val()){
@@ -270,11 +270,12 @@
 
     function getLastWriterInput(){
         let writerName = $("input[name=writers]")
-        console.log(writerName)        
+        console.log(writerName)
     }
 
 
 </script>
+<script src="https://checkout.stripe.com/checkout.js"></script>
 <script src="{% static 'entertainment/js/newWish.js' %}"></script>
 <script src="{% static 'entertainment/js/viewWish.js' %}"></script>
 {% endblock javascript %}
