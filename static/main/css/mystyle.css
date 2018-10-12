@@ -21,10 +21,10 @@ body{
 	background-color: black;
 	border-color: white;
 }
-.btn-login:hover{	
+.btn-login:hover{
 	color: black;
 	background-color: white;
-	border-color: white;	
+	border-color: white;
 }
 .top-right{
 	position: absolute;
@@ -61,7 +61,7 @@ body{
 }
 
 
-#searchnavbarleft{ 
+#searchnavbarleft{
 	padding-left:20px;
 }
 
@@ -75,7 +75,7 @@ body{
 
 /* smaller than 600px */
 @media only screen and (max-width: 600px) {
-    /*#profiletopright{ 
+    /*#profiletopright{
         display: none;
     }*/
 	.navbar-brand{
@@ -85,7 +85,7 @@ body{
 
 /* bigger than 600px */
 @media only screen and (min-width: 10px) {
-    #profilesidebar{ 
+    #profilesidebar{
         display: none;
     }
 }
@@ -107,7 +107,7 @@ body{
 
 .dropdown-menu{
 	width: 220px !important;
-	/*background-color: red;*/	
+	/*background-color: red;*/
 }
 
 .dropdown-divider{
@@ -130,7 +130,7 @@ body{
 
 .bg-mycardbg{
 	background-color: #32383E;
-	
+
 }
 
 .book{
@@ -148,11 +148,11 @@ body{
 	text-decoration: underline;
 }
 .book a{
-	color: white;	
+	color: white;
 }
 
 .book a:hover{
-	text-decoration: none;	
+	text-decoration: none;
 }
 
 /* no need because all images are the same size in python code on upload
@@ -169,8 +169,8 @@ body{
 
 @media (max-width: 768px) {
 	.book img{
-	 min-height: 100vw !important;	 
-	} 
+	 min-height: 100vw !important;
+	}
 }*/
 
 .book:hover{
@@ -194,7 +194,7 @@ body{
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after{
   background-image: url("https://image.freepik.com/iconen-gratis/controle-teken-in-een-ronde-zwart-vierkant_318-42213.jpg");
-  background-size: 16px 16px;  
+  background-size: 16px 16px;
 }
 
 
@@ -220,7 +220,7 @@ body{
     z-index: 3;
     color: black;
     background-color: white;
-    
+
 }
 
 .pagination > li > a:focus,
@@ -230,9 +230,9 @@ body{
     z-index: 3;
 	 color: black;
     background-color: #f1f1f1;
-    
+
 	box-shadow: none;
-	
+
 }
 
 .pagination > li.active > a,
@@ -244,7 +244,7 @@ body{
     background-color: black !important;
     border-color: black !important;
 	box-shadow: none !important;
-	
+
 }
 /* Footer */
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -328,7 +328,7 @@ section .section-title {
 .popover{
 	border-color: black;
 }
-.popover-body{ 
+.popover-body{
 	background: black;
 	color: white;
  }
@@ -356,10 +356,14 @@ input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
 input[type=file]:focus,
-.uneditable-input:focus { 
+.uneditable-input:focus {
   border-color: rgba(140, 140, 140, 0.8) !important;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(140, 140, 140, 1) !important;
   outline: 1px solid !important;
+}
+
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Naršyti";
 }
 
 input::-webkit-outer-spin-button,
@@ -825,9 +829,30 @@ ul {
 	width: 50%;
 }
 
+
+.img-avatar{
+	width: 75px;
+	height: 75px;
+	border-radius: 90px;
+}
+
+.wish-like-btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+.wish-like-btn h1{
+	font-size: 4rem;
+}
+
 /* MEDIA */
 
  @media screen and (max-width: 950px) {
+	 #newWishBtn{
+	 	bottom: 2.5rem;
+	 	right: 2.5rem;
+	 }
 	#addWishAlert{
 		width: 80%;
 	}
@@ -836,17 +861,17 @@ ul {
 	}
 	#paymentRange{
 		width: 75% !important;
-	}	
-  } 
+	}
+  }
 /* ANIMATIONS */
 @keyframes slideDown{
 	0%{
-		transform: translate(-50%, -20vh);		
+		transform: translate(-50%, -20vh);
 
 	}
 	100%{
 		transform: translate(-50%, -10vh);
-		
+
 	}
 }
 

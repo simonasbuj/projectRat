@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout as django_logout, authenticate, login as django_login
 from django.contrib.auth.models import User
 from .models import Info
@@ -9,7 +9,8 @@ def settings(request, username):
     if not request.user.is_authenticated:
         return redirect('library:index')
     else:
-        user = User.objects.get(username=username)
+        user = get_object_or_404(User, username=username)
+        # user = User.objects.get(username=username)
         if request.user == user:
             return render(request, 'accounts/settings.html')
 
@@ -41,4 +42,3 @@ def login_old_view(request):
             django_login(request, user)
 
     return redirect('library:index')
-

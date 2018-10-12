@@ -36,6 +36,6 @@ class WishView(viewsets.ViewSet):
         serializer = WishSerializer(wish)
         return Response(serializer.data)
 
-    #add post request
+    # add post request
     """ def create(self, request):
         pass """

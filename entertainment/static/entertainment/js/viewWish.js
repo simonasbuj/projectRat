@@ -23,16 +23,21 @@ function viewWish(){
             }
         })
         .then((data) => {
-            /* wishModal.find(".modal-body").find(".row").html("WISH ID: " + data.id + "<br>WISH PRICE: " + data.price); */
-            wishModal.find("#wishcontent").html("WISH ID: " + data.id + "<br>WISH PRICE: " + data.price);
+            // wishModal.find("#wishcontent").html("WISH ID: " + data.id + "<br>WISH PRICE: " + data.price);
+
+
+
             selectedWishId = data.id
-            $("#timeLeft").html(data.days_left)
+            wishModal.find("#timeLeft").html(data.days_left)
             //SLIDERIS
             var maxAmount = parseFloat(Math.round((data.price - data.donated) * 100) / 100).toFixed(2);
-            console.log("MAX AMOUNT: " + maxAmount);
+            if (maxAmount < 1){
+                mySlider.min = maxAmount;
+            }
             mySlider.max = maxAmount;
             mySlider.value = maxAmount;
             rangeValue.html(maxAmount);
+
 
             //select comments tab to be active and show modal
             $('#pills-comments-tab').tab('show');
@@ -80,7 +85,7 @@ $("#stripeBtn").on("click", processPayment);
 //STRIPE PAYMENTS
 var handler = StripeCheckout.configure({
             key: 'pk_test_YuNvTsnJ7v1s9FCREZfVOeeK',
-            image: "/static/img/logo-black.png",
+            image: "/static/img/logo-stripe.png",
             locale: 'auto',
         token: function(token) {
             // You can access the token ID with `token.id`.
