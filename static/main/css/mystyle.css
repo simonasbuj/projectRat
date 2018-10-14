@@ -842,9 +842,14 @@ ul {
   right: 0;
   transform: translateY(-50%);
 }
-.wish-like-btn h1{
+/* .wish-like-btn h1{
 	font-size: 4rem;
-}
+} */
+.wish-bookmark{ color: white; transition: .3s all ease; }
+.wish-bookmark:hover{ color: black; cursor: pointer; transition: .3s all ease;}
+.wish-bookmarked{ color: black !important; transition: .3s all ease;}
+.wish-bookmarked:hover{ color: black; cursor: pointer; transition: .3s all ease;}
+#wishDonatedInfo{cursor: pointer;}
 
 /* MEDIA */
 

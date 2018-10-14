@@ -3,6 +3,13 @@ var wishModal = $('#wishInfoModal');
 var rangeValue = $("#rangeValue");
 var mySlider = document.getElementById("paymentRange");
 var paymentForm = document.getElementById("paymentForm");
+var imgAvatar = document.getElementsByClassName("img-avatar");
+var wishDescription = document.getElementById("wishDescription");
+var wishTitle = document.getElementById("wishTitle");
+var wishWriters = document.getElementById("wishWriters");
+var wishPrice = document.getElementById("wishPrice");
+var wishDonated = document.getElementById("wishDonated");
+var wishDonatedInfo = document.getElementById("wishDonatedInfo");
 
 var lastViewedWish = 0;
 var selectedWishId = 0;
@@ -38,6 +45,28 @@ function viewWish(){
             mySlider.value = maxAmount;
             rangeValue.html(maxAmount);
 
+            imgAvatar[0].setAttribute("data-content", `Šios knygos paprašė ${data.created_by.username}`);
+            imgAvatar[0].src = data.created_by.profile_picture;
+            wishTitle.innerHTML = data.title;
+            wishDescription.innerHTML = data.description;
+
+            wishWriters.innerHTML = "";
+            data.writers.forEach(function(writer){
+                wishWriters.innerHTML += `<a href="#" class="text-muted d-block">${writer.name} ${writer.last_name}</a>`;
+            });
+
+            wishPrice.innerHTML = data.price;
+            wishDonated.innerHTML = data.donated;
+
+            var donators = ( data.transactions === undefined || data.transactions.length == 0) ? 'BŪK PIRMAS' : ' ';
+            data.transactions.forEach(function(t){
+                if (t.user){
+                    donators += `${t.user.username} ${t.amount}&euro;<br/>`;
+                }else{
+                    donators += `${t.firstname} ${t.lastname} ${t.amount}&euro;<br/>`;
+                }
+            });
+            wishDonatedInfo.setAttribute("data-content", donators);
 
             //select comments tab to be active and show modal
             $('#pills-comments-tab').tab('show');
@@ -161,3 +190,11 @@ function processPayment(){
 window.addEventListener('popstate', function() {
     handler.close();
 });
+
+
+function test(){
+    var imgAvatar = document.getElementsByClassName("img-avatar");
+    imgAvatar[0].setAttribute("data-content", "PAKEICIAU");
+    imgAvatar[0].src = "/static/img/logo-black.png";
+    console.log(imgAvatar[0]);
+}

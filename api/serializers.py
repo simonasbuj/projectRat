@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from library.models import Book, Writer
-from entertainment.models import Wish
+from entertainment.models import Wish, Transaction
 from accounts.models import Info
 from django.contrib.auth.models import User
 
@@ -26,10 +26,18 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'profile_picture')
 
+class TransactionSerializer(serializers.ModelSerializer):
+
+    user = UserSerializer()
+
+    class Meta:
+        model = Transaction
+        fields = ('user', 'firstname', 'lastname', 'amount')
 
 class WishSerializer(serializers.ModelSerializer):
     #many to many fields
     writers = WriterSerializer(many=True, read_only=True)
+    transactions = TransactionSerializer(source='transaction_set', many=True, read_only=True)
 
     created_by = UserSerializer()
 
@@ -40,4 +48,4 @@ class WishSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Wish
-        fields = ('id', 'title', 'description', 'price', 'donated', 'days_left', 'status', 'writers', 'api_url', 'created_by')
+        fields = ('id', 'title', 'description', 'price', 'donated', 'days_left', 'status', 'writers', 'api_url', 'created_by', 'transactions')

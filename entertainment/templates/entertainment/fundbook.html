@@ -145,11 +145,34 @@
                     <div class="modal-body">
                         <div class="container" id="wishcontent">
                             <div class="row">
-                                <div class="col-12 pl-0">
-                                    <a href=""><img src="{% static '/img/profile_icon.jpg' %}" class="img-avatar"></a><br>
-                                    <h2>Pavadinimas</h2>
-                                    <h4>Autoriai</h4>
-                                    <h3><a href="#" class="text-muted d-block">Vardas Pavarde</a> <a href="#" class="text-muted d-block">Vardas Pavarde</a></h3>
+                                <div class="offset-md-2 col-md-8 col-sm-12 pl-0">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href=""><img src="{% static '/img/profile_icon.jpg' %}" class="img-avatar" data-toggle='popover' data-trigger='hover' data-content='Slapyvardis paprašė šios knygos' data-placement='top'></a>
+                                        </div>
+                                        <div class="col-6 align-middle">
+
+                                            <h1 class="mb-0 wish-like-btn"><span class="badge badge-secondary float-right"><i class="fas fa-heart wish-bookmark"></i> 89</span></h1>
+                                        </div>
+                                    </div>
+
+                                    <h2 id="wishTitle">Pavadinimas</h2>
+                                    <h5 class="mb-0">Autoriai</h5>
+                                    <h4 id="wishWriters"><a href="#" class="text-muted d-block">Vardas Pavarde</a> <a href="#" class="text-muted d-block">Vardas Pavarde</a></h4>
+                                    <h5 class="mb-0">Kodėl ši knyga?</h5>
+                                    <p id="wishDescription">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, earum doloremque ab natus fuga magnam soluta iure ullam, consectetur sit quas ut vero veniam laborum quisquam quasi omnis molestias in.</p>
+                                    <hr>
+                                    <div class="row pb-3">
+                                        <div class="col-md-6 text-center">
+                                            <h5 class="mb-0">Kaina</h5>
+                                            <h4 class="text-muted d-block"><span id="wishPrice">15</span> EUR</h4>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <h5 class="mb-0">Surinkta pinigų</h5>
+                                            <h4 class="text-muted d-block" id="wishDonatedInfo" data-toggle='popover' data-trigger='hover' data-content='pirmas<br />antras' data-placement='top' data-html="true"><span id="wishDonated">22</span> EUR</h4>
+                                        </div>
+                                    </div>
+
 
 
                                 </div>
