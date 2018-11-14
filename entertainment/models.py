@@ -42,7 +42,7 @@ class Wish(models.Model):
 
     @property
     def get_age(self):
-        age = relativedelta.relativedelta(timezone.now(), self.created_at)
+        age = relativedelta.relativedelta(timezone.now(), self.updated_at)
         return age.days
 
     @property

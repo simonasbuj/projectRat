@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from library.models import Writer
 from .models import Wish, Transaction
+from library.models import Book, Order, Category, Writer
+from django.contrib.auth.models import User
+from django.db.models import Q
+from datetime import timedelta
 
 from django.utils.text import slugify
 from datetime import timedelta
 from django.utils import timezone
+import random
 
 #pagination
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -104,3 +108,81 @@ def payment(request):
         return HttpResponse("OK<br>NORAS: " + str(wish.id) + " " + wish.title + "<br>CHARGE ID: " + response['id'] + "<br>AMOUNT: " + str(float(response['amount']/100)) + " EUR<br>EMAIL: " + email)
     else:
         return redirect('entertainment:fundbook')
+
+
+def tinder(request):
+
+    if not request.user.is_authenticated:
+        return redirect('library:index')
+
+    #get relevant data, like genres, tags, writers of the books that user read.
+    orders = Order.objects.filter(user = request.user)
+
+    # 1 budas
+    # read_books = Book.objects.none()
+    # for o in orders:
+    #     read_books |= o.books.all()
+    # read_books = read_books.distinct()
+    # print(read_books)
+
+    # 2 budas
+    # order_ids = []
+    # for o in orders:
+    #     order_ids.append(o.id)
+    # read_books = Book.objects.filter(order__id__in=order_ids).distinct()
+    # print(read_books)
+
+    #normalus budas
+    read_books = Book.objects.filter(order__in=orders).distinct()
+
+    #get relevant categories, writers from read books
+    categories = Category.objects.filter(book__in=read_books).distinct()
+    writers = Writer.objects.filter(book__in=read_books).distinct()
+
+    #get similar users
+    max_age = request.user.info.birth_date + timedelta(days=1825)
+    min_age = request.user.info.birth_date - timedelta(days=1825)
+    similar_users = User.objects.filter(info__birth_date__lt=max_age, info__birth_date__gt=min_age).exclude(id=request.user.id)
+
+    # 'su' stands for similar users
+    su_orders = Order.objects.filter(user__in = similar_users)
+    su_books = Book.objects.filter(order__in=su_orders).distinct()
+    su_categories = Category.objects.filter(book__in=su_books).distinct()
+    su_writers = Writer.objects.filter(book__in=su_books).distinct()
+    print(su_books)
+    print(su_categories)
+    print(su_writers)
+
+    #monster query ... Q objects, creates a query. '|' means 'or', '&' means 'and' '~' before Q means 'not'
+    books = Book.objects.filter((Q(category__in=categories) |  Q(writers__in=writers)
+                                | Q(category__in=su_categories) | Q(writers__in=su_writers) | Q(id__in = su_books)
+                                )
+                                & ~Q(id__in = read_books)).distinct()
+
+    if not books:
+        return render(request, 'entertainment/tinder.html')
+
+    max_num = books.count() - 1
+    random_num = random.randint(0,max_num)
+    book = books[random_num]
+
+    #tell user why the book was selected
+    reasons = []
+    if book.category in categories:
+        reasons.append('Skaitėte knygas, kurių kategorija yra <b>' + str(book.category) + '</b>')
+    for w in book.writers.all():
+        if w in writers:
+            reasons.append('Skaitėte kitas <b>' + str(w) + '</b> knygas')
+        if w in su_writers:
+            reasons.append('Jūsų bendraamžiai skaito <b>' + str(w) + '</b> knygas')
+    if book.category in su_categories:
+        reasons.append('Jūsų bendraamžiai skaito <b>' + str(book.category) + '</b> kategorijos knygas')
+    if book in su_books:
+        reasons.append('Jūsų bendraamžiai skaitė šią knygą')
+
+    context = {
+        'book': book,
+        'reasons': reasons
+    }
+
+    return render(request, 'entertainment/tinder.html', context)

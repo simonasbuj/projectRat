@@ -8,4 +8,6 @@ urlpatterns = [
     path('knygnesys/addwish/', views.addwish, name='addwish'),
     path('knygnesys/payment', views.payment, name='payment'),
 
+    path('tinder/', views.tinder, name='tinder'),
+
 ]

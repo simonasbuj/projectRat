@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'entertainment:tinder' %}">Pasiūlymai</a></li>
+{% endblock breadcrumb %}
+{% block breadcrumbinfo %}Individualizuoti knygų pasiūlymai jums{% endblock breadcrumbinfo %}
+
+{% block content %}
+
+    <div class="container text-center">
+        {% if book %}
+        <img class="book pointer" src="{{ book.cover_url }}" data-toggle="modal" data-target="#bookInfoModal">
+        <div class="container pt-3">
+            <button class="btn btn-secondary btn-circle btn-xl" data-toggle='popover' data-trigger='hover' data-content='Nedomina' data-placement='top'><i class="fas fa-times"></i></button>
+            <button id="rldBtn" class="btn btn-secondary btn-circle btn-middle" data-toggle='popover' data-trigger='hover' data-content='Nežinau' data-placement='top'><i class="fas fa-redo"></i></button>
+            <button class="btn btn-secondary btn-circle btn-xl" data-toggle='popover' data-trigger='hover' data-content='Patinka' data-placement='top'><i class="fas fa-heart"></i></button>
+        </div>
+        {% else %}
+        <div class="row align-items-center py-5" id="no_comments">
+            <div class="col-sm-12 text-center text-muted py-5">
+                <h3><i class="far fa-clock"></i></h3>
+                <h1 class="">Šiuo metu neturime pasiūlymų</h1>
+                <h6>Kol kas gali peržiūrėti visų <a class="text-dark" href="{% url 'library:index' %}">knygų katalogą</a></h6>
+                <h6>Arba <a class="text-dark" href="{% url 'entertainment:fundbook' %}">paprašyti naujos knygos</a></h6>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+<!-- book info mdal -->
+    <div class="modal fade" id="bookInfoModal" tabindex="-1" role="dialog" aria-labelledby="bookInfoModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content no-radius">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Knygos aprašymas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pb-0">
+                    <p>knygos info</p>
+                    <h5 class="mb-0">Šią knygą siūlome jums nes</h5>
+                    {% for r in reasons %}
+                        <p class="mb-0">{{ r|safe }}</p>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Atgal</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascript %}
+{{ block.super }}
+<script>
+$( document ).ready(function() {
+    $('[data-toggle="popover"]').popover(); //kad veiktu popover
+
+});
+</script>
+<script src="{% static 'entertainment/js/tinder.js' %}"></script>
+{% endblock javascript %}

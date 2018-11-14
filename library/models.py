@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from django.utils.text import slugify
+from django.utils import timezone
+to_tz = timezone.get_default_timezone()
 
 #absolute_url
 from django.urls import reverse
@@ -9,7 +11,7 @@ from django.urls import reverse
 #paveiksleliams
 from .helper import book_cover_upload
 from PIL import Image
-from django.contrib.staticfiles.templatetags.staticfiles import static 
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 # Create your models here.
 
@@ -40,19 +42,19 @@ class Book(models.Model):
             size = ( 331, 460)
             image = image.resize(size, Image.ANTIALIAS)
             image.save(self.cover.path)
-        
+
         print(self.writers.all())
         book = Book.objects.get(id=self.id)
-        print("dabar: " + str(book.writers.all()))        
-    
+        print("dabar: " + str(book.writers.all()))
+
     def delete(self, *args, **kwargs):
         # object is being removed from db, remove the file from storage first
         if self.cover:
             self.cover.delete()
 
         return super(Book, self).delete(*args, **kwargs)
-    
-    def remove_old_image_on_image_update(self):        
+
+    def remove_old_image_on_image_update(self):
         #patikrinsim ar update ar insert
         try:
             book = Book.objects.get(id=self.id)
@@ -151,5 +153,14 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+#orders table
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)  #auto_now_add=True
+    books = models.ManyToManyField(Book, blank=True)
 
-    
+    class Meta:
+        db_table = 'orders'
+
+    def __str__(self):
+        return self.user.username + ' ' + str(self.created_at.astimezone(to_tz))

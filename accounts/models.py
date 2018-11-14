@@ -29,6 +29,7 @@ class Info(models.Model):
     lytis = models.CharField(max_length=1, choices=LYTYS, default='p')
     last_read_messages = models.DateTimeField(null=True, blank=True) #2018.06.14
     bookmarks = models.ManyToManyField(Book, blank=True)
+    birth_date = models.DateField(("Date"), null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.avatar:
@@ -36,8 +37,8 @@ class Info(models.Model):
         else:
             self.remove_old_image_on_image_update()
             super(Info, self).save(*args, **kwargs)
-    
-    def remove_old_image_on_image_update(self):        
+
+    def remove_old_image_on_image_update(self):
         #patikrinsim ar update ar insert
         try:
             info = Info.objects.get(user=self.user)
@@ -94,4 +95,3 @@ class Comment(models.Model):
             return str(age.hours) + ' val'
         else:
             return str(age.minutes) + ' min'
-

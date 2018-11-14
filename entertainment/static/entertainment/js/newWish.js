@@ -6,7 +6,7 @@ var booktitleinput = document.getElementsByName("bookName")[0];
 
 //functions
 function addNewWriter(){
-        //console.log( $("input[name=writers]") ) 
+        //console.log( $("input[name=writers]") )
         var writerInputs = $("input[name=writers]");
         var isValid = true;
         writerInputs.each(function( index ) {
@@ -17,17 +17,17 @@ function addNewWriter(){
         });
 
         if(isValid){
-            var htmls = "";       
+            var htmls = "";
             htmls += `
             <div class="inputWrapper">
                 <div class='form-group mb-1'>
                     <input type='text' class='form-control'  name='writers' placeholder='Autoriaus vardas ir pavardė' onchange='removeInvalid(this)'>
                     <i class="fas fa-times xbtn"></i>
                 </div>
-            </div>    
-            `; 
+            </div>
+            `;
             $(htmls).hide().appendTo(writersDiv).fadeIn(1000);
-            
+
         }
 }
 
@@ -43,7 +43,7 @@ function getBooks(){
     //console.log(this.value);
     bookSuggestions = $("#bookSuggestions");
     bookSuggestions.html("");
-    if(this.value){
+    if(this.value && this.value.length > 3){
 
         var api_url = '/api/books/search/' + this.value;
         fetch(api_url)
@@ -58,7 +58,7 @@ function getBooks(){
                         </a>
                     </div>
                 `;
-            });            
+            });
             $(output).hide().appendTo(bookSuggestions).fadeIn(1000);
             $('[data-toggle="popover"]').popover();
             //document.getElementById("bookSuggestions").innerHTML = output;
@@ -68,7 +68,7 @@ function getBooks(){
 }
 
 function addNewWish(e){
-    
+
     var isValid = true;
     var writerInputs = $("input[name=writers]");
     var bookName = $("input[name=bookName]");
