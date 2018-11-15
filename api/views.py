@@ -5,6 +5,7 @@ from library.models import Book
 from entertainment.models import Wish
 from .serializers import BookSerializer, WishSerializer
 from unidecode import unidecode
+from django.utils.text import slugify
 
 # Create your views here.
 class BookView(viewsets.ModelViewSet):
@@ -20,7 +21,7 @@ class SearchBooksView(generics.ListAPIView):
     def get_queryset(self):
         keyword = self.kwargs['keyword']
         keyword = unidecode(keyword.strip())
-        return Book.objects.filter(slug__icontains=keyword.replace(" ", "-"))
+        return Book.objects.filter(slug__icontains=slugify(keyword))
 
 
 class WishView(viewsets.ViewSet):

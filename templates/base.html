@@ -80,7 +80,7 @@
 							<div class="dropdown-menu dropdown-menu-right no-radius" aria-labelledby="navbarDropdown">
 								  <a class="dropdown-item text-dark" href="#"><i class="far fa-fw fa-comment-alt"></i> Pranešimai <span class="badge badge-secondary">18</span></a>
 								  <a class="dropdown-item text-dark" href="#"><i class="far fa-fw fa-calendar-alt"></i>Užsakymai</a>
-								  <a class="dropdown-item text-dark" href="#"><i class="fa fa-fw fa-user-circle"></i> Paskyra</a>
+								  <a class="dropdown-item text-dark" href="{% url 'accounts:profile' username=user.username %}"><i class="fa fa-fw fa-user-circle"></i> Paskyra</a>
 								  <div class="dropdown-divider"></div>
 								  <a class="dropdown-item text-dark" href="{% url 'accounts:settings' user.username %}"><i class="fa fa-fw fa-cog"></i> Nustatymai</a>
 								  <a class="dropdown-item text-dark" href="{% url 'accounts:logout' %}"><i class="fa fa-fw fa-sign-out-alt"></i> Atsijungti</a>

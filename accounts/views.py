@@ -5,6 +5,14 @@ from .models import Info
 
 # Create your views here.
 
+
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {
+        'user_profile': user
+    }
+    return render(request, 'accounts/profile.html', context)
+
 def settings(request, username):
     if not request.user.is_authenticated:
         return redirect('library:index')

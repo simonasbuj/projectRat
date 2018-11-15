@@ -6,9 +6,11 @@ from django.db.models import Q
 from datetime import timedelta
 
 from django.utils.text import slugify
+from django.http import HttpResponse
 from datetime import timedelta
 from django.utils import timezone
 import random
+import json
 
 #pagination
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -157,26 +159,31 @@ def tinder(request):
     books = Book.objects.filter((Q(category__in=categories) |  Q(writers__in=writers)
                                 | Q(category__in=su_categories) | Q(writers__in=su_writers) | Q(id__in = su_books)
                                 )
-                                & ~Q(id__in = read_books)).distinct()
+                                & ~Q(id__in = read_books)
+                                & ~Q(id__in = request.user.info.bookmarks.all())
+                                & ~Q(id__in = request.user.info.book_dislikes.all())
+                                & ~Q(id=request.session.get('last_offered_book', 0))
+                                ).distinct()
 
     if not books:
+        request.session['last_offered_book'] = 0
         return render(request, 'entertainment/tinder.html')
 
     max_num = books.count() - 1
     random_num = random.randint(0,max_num)
     book = books[random_num]
-
+    request.session['last_offered_book'] = book.id
     #tell user why the book was selected
     reasons = []
     if book.category in categories:
-        reasons.append('Skaitėte knygas, kurių kategorija yra <b>' + str(book.category) + '</b>')
+        reasons.append('Skaitėte knygas, kurių žanras yra <b>' + str(book.category) + '</b>')
     for w in book.writers.all():
         if w in writers:
             reasons.append('Skaitėte kitas <b>' + str(w) + '</b> knygas')
         if w in su_writers:
             reasons.append('Jūsų bendraamžiai skaito <b>' + str(w) + '</b> knygas')
     if book.category in su_categories:
-        reasons.append('Jūsų bendraamžiai skaito <b>' + str(book.category) + '</b> kategorijos knygas')
+        reasons.append('Jūsų bendraamžiai skaito <b>' + str(book.category) + '</b> žanro knygas')
     if book in su_books:
         reasons.append('Jūsų bendraamžiai skaitė šią knygą')
 
@@ -186,3 +193,23 @@ def tinder(request):
     }
 
     return render(request, 'entertainment/tinder.html', context)
+
+
+def like_book(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        json_data = json.loads(request.body)
+        book = get_object_or_404(Book, id=json_data['bookId'])
+        request.user.info.bookmarks.add(book)
+        return HttpResponse("Ok")
+    else:
+        return redirect('library:index')
+
+
+def dislike_book(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        json_data = json.loads(request.body)
+        book = get_object_or_404(Book, id=json_data['bookId'])
+        request.user.info.book_dislikes.add(book)
+        return HttpResponse("Ok")
+    else:
+        return redirect('library:index')

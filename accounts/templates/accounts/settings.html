@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="#">{{ user.username }}</a></li>              
+    <li class="breadcrumb-item"><a href="{% url 'accounts:profile' username=user.username %}">{{ user.username }}</a></li>
     <li class="breadcrumb-item active">nustatymai</li>
 {% endblock breadcrumb %}
 {% block breadcrumbinfo %}Jūsų paskyros nustatymai ir informacija{% endblock breadcrumbinfo %}
@@ -110,12 +110,12 @@
         var fileType = file["type"]
         var reader  = new FileReader();
         var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
-              
+
         reader.onloadend = function () {
             preview1.src = reader.result;
             preview2.src = reader.result;
         }
-        
+
         if (file) {
             if ($.inArray(fileType, ValidImageTypes) < 0) {
                 console.log(avatar)
@@ -128,7 +128,7 @@
                 fileInputField.removeClass("is-invalid")
                 fileInputField.addClass("is-valid")
                 //fileInputField.siblings('.custom-file-label').html(file)
-            }            
+            }
         } else {
             preview1.src = avatar;
             preview2.src = avatar;

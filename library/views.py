@@ -25,7 +25,7 @@ from accounts.models import Comment
 # Create your views here.
 
 def index(request):
-    selected_categories = Category.objects.filter(id__in=request.POST.getlist('Cat'))    
+    selected_categories = Category.objects.filter(id__in=request.POST.getlist('Cat'))
     if request.method == 'POST' and selected_categories and 'submit_form_filter' in request.POST:
         books = Book.objects.filter(category__in=selected_categories)
         request.session['selected_categories'] = request.POST.getlist('Cat')
@@ -36,12 +36,12 @@ def index(request):
         return HttpResponseRedirect(reverse('library:index'))
     elif request.session.get('selected_categories',0):
         selected_categories = Category.objects.filter(id__in=request.session['selected_categories'])
-        books = Book.objects.filter(category__in=selected_categories)    
+        books = Book.objects.filter(category__in=selected_categories)
     else:
         books = Book.objects.all()
 
     categories = Category.objects.all()
-    paginator = Paginator(books, 24) #kiek objektų viename psl
+    paginator = Paginator(books, 9) #kiek objektų viename psl
     page = request.GET.get('p')
     books = paginator.get_page(page)
     context = {
@@ -68,7 +68,7 @@ def test(request):
     book_list = Book.objects.all()
     context = {
         'book_list': book_list,
-    }    
+    }
     return render(request, 'library/test.html', context)
 
 def search(request):
@@ -128,12 +128,12 @@ def comment(request, slug):
             }
             return JsonResponse(data)
         #comment without parent
-        if parent_id == 0:            
+        if parent_id == 0:
             comment = Comment.objects.create(text=text, created_by=user, book=book)
 
             if book.comment_set.all().count() <= 1:
                 no_comments = 1
-            else: 
+            else:
                 no_comments = 0
             data = {
                 'id': comment.id,
@@ -156,7 +156,7 @@ def comment(request, slug):
                 no_comments = 1
             else:
                 no_comments = 0
-            
+
             data = {
                 'parent_id': parent_id,
                 'id': comment.id,
@@ -165,8 +165,8 @@ def comment(request, slug):
                 'no_comments': no_comments,
             }
             return JsonResponse(data)
-                
-        
+
+
         print("bandysim addinti comment knygai: " + text + " su id: " + parent_id)
         return redirect(book)
     else:
@@ -175,5 +175,3 @@ def comment(request, slug):
 
 def landing(request):
     return render(request, 'library/landing.html')
-
-

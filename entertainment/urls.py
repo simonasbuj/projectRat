@@ -9,5 +9,7 @@ urlpatterns = [
     path('knygnesys/payment', views.payment, name='payment'),
 
     path('tinder/', views.tinder, name='tinder'),
+    path('tinder/like', views.like_book, name='like_book'),
+    path('tinder/dislike', views.dislike_book, name='dislike_book'),
 
 ]

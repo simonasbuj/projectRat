@@ -12,9 +12,9 @@
         {% if book %}
         <img class="book pointer" src="{{ book.cover_url }}" data-toggle="modal" data-target="#bookInfoModal">
         <div class="container pt-3">
-            <button class="btn btn-secondary btn-circle btn-xl" data-toggle='popover' data-trigger='hover' data-content='Nedomina' data-placement='top'><i class="fas fa-times"></i></button>
+            <button id="noBtn" class="btn btn-secondary btn-circle btn-xl" data-toggle='popover' data-trigger='hover' data-content='Nedomina' data-placement='top'><i class="fas fa-times"></i></button>
             <button id="rldBtn" class="btn btn-secondary btn-circle btn-middle" data-toggle='popover' data-trigger='hover' data-content='Nežinau' data-placement='top'><i class="fas fa-redo"></i></button>
-            <button class="btn btn-secondary btn-circle btn-xl" data-toggle='popover' data-trigger='hover' data-content='Patinka' data-placement='top'><i class="fas fa-heart"></i></button>
+            <button id="yesBtn" class="btn btn-secondary btn-circle btn-xl" data-toggle='popover' data-trigger='hover' data-content='Patinka' data-placement='top'><i class="fas fa-heart"></i></button>
         </div>
         {% else %}
         <div class="row align-items-center py-5" id="no_comments">
@@ -61,6 +61,10 @@ $( document ).ready(function() {
     $('[data-toggle="popover"]').popover(); //kad veiktu popover
 
 });
+var bookId = {{ book.id }};
+var likeUrl = "{% url 'entertainment:like_book' %}";
+var dislikeUrl = "{% url 'entertainment:dislike_book' %}";
+var csrf = "{{ csrf_token }}";
 </script>
 <script src="{% static 'entertainment/js/tinder.js' %}"></script>
 {% endblock javascript %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'accounts:profile' username=user_profile.username %}">{{ user_profile.username }}</a></li>
+{% endblock breadcrumb %}
+{% block breadcrumbinfo %}{{ user_profile.username }} lankytojo paskyra {% endblock breadcrumbinfo %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12 col-md-8">
+        <h3>Patikusios knygos</h3>
+        <hr>
+        <div class="row">
+            {% for book in user_profile.info.bookmarks.all %}
+                <div class="col-sm-2">
+                    <a href="{{ book.get_absolute_url }}">
+                        <img src="{{ book.cover_url }}" class="book pointer w-100" data-toggle='popover' data-trigger='hover' data-content='{{ book.title }}' data-placement='top'>
+                    </a>
+                </div>
+            {% empty %}
+                {% if user_profile == user%}
+                    <div class="col-sm-12 text-center text-muted py-5">
+                        <h3><i class="fas fa-book"></i></h3>
+                        <h1 class="">Nėra patikusių knygų</h1>
+                        <h6>Ieškok knygų visų <a class="text-dark" href="{% url 'library:index' %}">knygų kataloge</a></h6>
+                        <h6>Arba peržiūrėk tau <a class="text-dark" href="{% url 'entertainment:tinder' %}"> pritaikytus pasiūlymus </a></h6>
+                    </div>
+                {% else %}
+                    <div class="col-sm-12 text-center text-muted py-5">
+                        <h3><i class="fas fa-book"></i></h3>
+                        <h1 class="">Šis lankytojas dar neturi patikusių knygų</h1>
+                        <h6>Ieškok knygų visų <a class="text-dark" href="{% url 'library:index' %}">knygų kataloge</a></h6>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+        akordionai
+        {% if user_profile == user %}
+            <a href="{% url 'accounts:settings' username=user.username %}">Nustatymai</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+{{ block.super }}
+<script>
+$( document ).ready(function() {
+    $('[data-toggle="popover"]').popover(); //kad veiktu popover
+
+});
+</script>
+{% endblock javascript%}

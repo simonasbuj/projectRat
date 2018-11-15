@@ -28,7 +28,8 @@ class Info(models.Model):
     avatar = models.ImageField(upload_to=user_avatar_upload, null=True, blank=True)
     lytis = models.CharField(max_length=1, choices=LYTYS, default='p')
     last_read_messages = models.DateTimeField(null=True, blank=True) #2018.06.14
-    bookmarks = models.ManyToManyField(Book, blank=True)
+    bookmarks = models.ManyToManyField(Book, blank=True, related_name='likes') #aka book_likes
+    book_dislikes = models.ManyToManyField(Book, blank=True, related_name='dislikes')
     birth_date = models.DateField(("Date"), null=True, blank=True)
 
     def save(self, *args, **kwargs):
