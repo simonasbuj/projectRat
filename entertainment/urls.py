@@ -12,4 +12,7 @@ urlpatterns = [
     path('tinder/like', views.like_book, name='like_book'),
     path('tinder/dislike', views.dislike_book, name='dislike_book'),
 
+    path('addbook/', views.addbook, name='addbook'),
+    path('deletebook/<int:id>', views.deletebook, name='deletebook'),
+
 ]

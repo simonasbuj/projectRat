@@ -25,6 +25,7 @@ class Book(models.Model):
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField('Tag', through="BookTags", blank=True)
     added_at = models.DateTimeField(auto_now_add=True, blank=True, editable=False)
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'books'

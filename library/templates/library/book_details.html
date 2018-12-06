@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block breadcrumb %}
-    {{ block.super }}                 
+    {{ block.super }}
     <li class="breadcrumb-item active">{{ book.title }}</li>
 {% endblock breadcrumb %}
 {% block breadcrumbinfo %}Knygos aprašymas{% endblock breadcrumbinfo %}
@@ -18,17 +18,17 @@
             </div><!--/book image column-->
             <div class="col-sm-12 col-md-8">
                     <div class="float-right">
-                        <h1 class="d-inline"><span class="badge badge-dark" data-toggle='popover' data-trigger='hover' data-content='Įvertinimas' data-placement='top'>8.5</span></h1>     
+                        <h1 class="d-inline"><span class="badge badge-dark" data-toggle='popover' data-trigger='hover' data-content='Įvertinimas' data-placement='top'>8.5</span></h1>
                         {% if book in user.info.bookmarks.all %}
                             <h1 class="d-inline"><i class="fa fa-star bookmarked" role="button" id="bookmark" data-toggle='popover' data-trigger='hover' data-content='Pamiršti' data-placement='top'></i></h1>
                         {% else %}
                             <h1 class="d-inline"><i class="fa fa-star bookmark" role="button" id="bookmark" data-toggle='popover' data-trigger='hover' data-content='Prisiminti' data-placement='top'></i></h1>
-                        {% endif %}                                           
+                        {% endif %}
                     </div>
-            
+
                 <h1>{{ book.title }}</h1>
                 <h4>Autoriai:</h4>
-                <h3>{% for writer in book.writers.all %}<a href="#"  class="text-muted">{{ writer }}</a> {% endfor %}</h3>                
+                <h3>{% for writer in book.writers.all %}<a href="#"  class="text-muted">{{ writer }}</a> {% endfor %}</h3>
                 <h4>Žanras:</h4>
                 <h3><a href="#"  class="text-muted">{{ book.category }}</a></h3>
                 <h4>Aprašymas:</h4>
@@ -51,8 +51,8 @@
                     <!-- Komentarai -->
                     <div class="tab-pane fade show active" id="pills-comments" role="tabpanel" aria-labelledby="pills-home-tab">
                             {% if book.comment_set.all %}
-                            <div class="comments-container">                                
-                                <ul id="comments-list" class="comments-list">                                    
+                            <div class="comments-container">
+                                <ul id="comments-list" class="comments-list">
                                         {% for comment in book.comment_set.all %}
                                         {% if not comment.parent %}
                                         <li>
@@ -63,7 +63,7 @@
                                                         {% if comment.created_by == user %}
                                                         <h6 class="comment-name by-you">
                                                         {% else %}
-                                                        <h6 class="comment-name">                                                                
+                                                        <h6 class="comment-name">
                                                         {% endif %}
                                                             <a href="#">{{ comment.created_by.username }}</a>
                                                         </h6>
@@ -77,11 +77,11 @@
                                             </div>
                                             <!-- komentarai atsakymai -->
                                             {% if comment.replies.all %}
-                                                {% if comment.replies.all.count > max_num_of_replies %}                                                                                          
+                                                {% if comment.replies.all.count > max_num_of_replies %}
                                                     <ul class='comments-list reply-list' style="display: none;">
                                                 {% else %}
                                                     <ul class='comments-list reply-list'>
-                                                {% endif %}                                              
+                                                {% endif %}
                                                     {% for reply in comment.replies.all %}
                                                             <li>
                                                                 <div class='comment-avatar'><img src='{{ reply.created_by.info.avatar_url }}' alt=''></div>
@@ -90,7 +90,7 @@
                                                                         {% if reply.created_by == user %}
                                                                         <h6 class="comment-name by-you">
                                                                         {% else %}
-                                                                        <h6 class="comment-name">                                                                
+                                                                        <h6 class="comment-name">
                                                                         {% endif %}
                                                                         <a href='#'>{{ reply.created_by.username }}</a></h6>
                                                                         <span>{{ reply.get_age }}</span>
@@ -100,12 +100,12 @@
                                                                         {{ reply.text|safe }}
                                                                     </div>
                                                                 </div>
-                                                            </li>                                                        
+                                                            </li>
                                                     {% endfor %}
                                                 </ul>
-                                                {% if comment.replies.all.count > max_num_of_replies %}                                                                                          
+                                                {% if comment.replies.all.count > max_num_of_replies %}
                                                     <button class="btn btn-sm btn-dark btn-block mt-1 showReplies">Rodyti atsakymus ({{ comment.replies.all.count }})</button>
-                                                {% endif %} 
+                                                {% endif %}
                                             {% endif %}
                                             <!--/kommentaro atsakymai-->
                                         </li>
@@ -119,7 +119,7 @@
                                         <h3><i class="far fa-comments"></i></h3>
                                         <h1 class="">Nėra komentarų</h1>
                                         <h6>Būk Pirmas, pasidalinęs savo mintimis!</h6>
-                                    </div>                                
+                                    </div>
                                 </div>
                             {% endif %}
                             <!-- komentaro rašymas-->
@@ -129,7 +129,7 @@
                                 <ul id="comments-list" class="comments-list">
                                     <li>
                                         <div class="comment-main-level">
-                                            <!-- Avataras -->                                            
+                                            <!-- Avataras -->
                                             <div class="comment-avatar">
                                                     <img src="{{ user.info.avatar_url }}" alt="">
                                             </div>
@@ -160,8 +160,8 @@
                                         <h6>Norėdamas dalyvauti diskusijoje</h6>
                                         <button type="button" class="btn btn-dark btn-dark-custom no-radius" data-toggle="modal" data-target="#exampleModal">
                                                 <i class="fa fa-fw fa-sign-in-alt"></i> PRISIJUNK
-                                        </button><!-- //Jeigu neprisijungęs--> 
-                                    </div>                                
+                                        </button><!-- //Jeigu neprisijungęs-->
+                                    </div>
                                 </div>
                             {% endif %}
 
@@ -170,14 +170,14 @@
                         <div class="row align-items-center">
                             <div class="col-sm-12 text-center py-5">
                                 <h1 class="text-muted py-5">Coming soon... 2022</h1>
-                            </div>                                
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-tags" role="tabpanel" aria-labelledby="pills-contact-tab">
                         <div class="row align-items-center">
                             <div class="col-sm-12 text-center py-5">
                                 <h1 class="text-muted py-5">Coming soon... 2021</h1>
-                            </div>                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -194,7 +194,7 @@
                             Pridėti į užsakymą <i class="fas fa-caret-square-up float-right"></i>
                         </h5>
                       </div>
-              
+
                       <div id="collapseOrder" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
                             <form>
@@ -221,7 +221,7 @@
                                 Panašios knygos <i class="fas fa-caret-square-down float-right" id="AddsIcon"></i>
                             </h5>
                           </div>
-                  
+
                           <div id="collapseSimilarBooks" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
                             <div class="card-body">
                                 <div class="row">
@@ -229,7 +229,7 @@
                                     <div class="col-sm-6 col-lg-4 mt-2">
                                         <a href="{{ book.get_absolute_url }}">
                                             <img class="w-100 book" src="{{ book.cover_url }}" data-toggle='popover' data-trigger='hover' data-content='{{ book.title }}' data-placement='top'>
-                                            <h2 class="top-right"><span class="badge badge-dark">8.5</span></h2> 
+                                            <h2 class="top-right"><span class="badge badge-dark">8.5</span></h2>
                                         </a>
                                     </div>
                                     {% empty %}
@@ -238,14 +238,38 @@
                                             <h3><i class="fas fa-ban"></i></h3>
                                             <h1 class="">Nėra panašių...</h1>
                                             <h6>Ši knyga yra unikali!</h6>
-                                        </div>                                
-                                    
+                                        </div>
+
                                     {% endfor %}
                                 </div>
                             </div>
                           </div>
                         </div>
                       </div><!-- /accordionSimilarBooks -->
+                      <div id="accordionAdditionallInfo" class="mt-2">
+                            <div class="card">
+                              <div class="card-header pointer" id="Adds" data-toggle="collapse" data-target="#collapseAdditionallInfo" aria-expanded="true" aria-controls="collapseSimilarBooks">
+                                <h5 class="mb-0">
+                                    Papildoma<i class="fas fa-caret-square-down float-right" id="AddsIcon"></i>
+                                </h5>
+                              </div>
+
+                              <div id="collapseAdditionallInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            Knyga priklauso {% if book.owner %}<a href="{% url 'accounts:profile' username=book.owner.username %}">{{ book.owner.username }}</a>  {% else %} knygų klubui {% endif %}
+                                        </div>
+                                        <div class="col-12">
+                                            {% if book.owner == user %}
+                                                <a href="{% url 'entertainment:deletebook' id=book.id %}" class="btn btn-dark btn-dark-custom btn-block mt-3 no-radius" type="submit"><i class="fas fa-minus-square"></i> Ištrink savo knygą</a> 
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div><!-- /accordionAdditionallInfo -->
     </div><!--/right column-->
 
 
@@ -263,63 +287,63 @@
 <script src="{% static 'library/js/comments.js' %}"></script>
 <script>
     $( document ).ready(function() {
-        $('[data-toggle="popover"]').popover(); 
+        $('[data-toggle="popover"]').popover();
         bookmark()
         addComment()
         reply()
         showHiddenReplies()
         rotateCaret()
-    
+
         function reply(){
             $(".fa-reply").click(function(e) {
                 //get parent div
                 let parentComment = $(this).closest(".comment-box")
-    
+
                 changeReplyText(parentComment)
-                $('[data-toggle="popover"]').popover(); 
+                $('[data-toggle="popover"]').popover();
                 //move to reply area and focus it boiiiii
                 $('html, body').animate({
                     scrollTop: $("#reply").offset().top - 200
-                }, 1000);            
+                }, 1000);
                 $("#newcomment_text").focus();
-    
+
                 $("#dontreply").click(function(e) {
                     console.log("bandysim pasalinti reply")
                     $(this).closest("div").fadeOut(300, function() { $(this).closest("div").remove(); });
                     $('.popover').popover('hide');
                     //$(this).closest("div").remove()
                     changeIsReply(0)
-                });                
-    
+                });
+
             });
         }
-    
+
         function changeReplyText(parentComment){
             //get coment author
             let author = parentComment.find(".comment-name")
             author = author.text()
             console.log(author)
-    
+
             //get comment id
             let id = parentComment.attr("comId")
             console.log(id)
             changeIsReply(id)
-    
+
             //get comment text
             let comment = parentComment.find(".comment-content")
             comment = comment.text().trim()
             console.log(comment)
-    
+
             let replyText = $("#newcomment")
             replyText.find("div#replyingTo").remove()
             replyText.prepend("<div id='replyingTo'><button id='dontreply' type='button' class='close' aria-label='Close' data-toggle='popover' data-trigger='hover' data-content='Atšaukti' data-placement='top'><span aria-hidden='true'>&times;</span></button><h5>Atsakai į " + author + " komentarą:</h5><p>" + comment + "</p></div>")
         }
-    
+
         function changeIsReply(id){
             let isReply = $("input[name='isReply']")
             isReply.val(id)
         }
-    
+
         function bookmark(){
             $("#bookmark").click(function(e) {
                 console.log("bandysim bookmarkint")
@@ -341,7 +365,7 @@
                             btn.attr('data-content', 'Pamiršti')
                         } else {
                             btn.attr('data-content', 'Prisiminti')
-                        }          
+                        }
                     },
                     error: function(data){
                         console.log('nepaejo')
@@ -349,19 +373,19 @@
                 });
             });
         }
-    
+
         function addComment(){
             let form = $("#newCommentForm")
-    
+
             form.submit(function(e){
                 e.preventDefault()
-                let text = form.find("textarea").val().trim() 
+                let text = form.find("textarea").val().trim()
                 if(!text){
                     form.find("textarea").addClass("is-invalid")
                     return false
                 }
                 text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                let csrf_token = form.find("[name='csrfmiddlewaretoken']").val()             
+                let csrf_token = form.find("[name='csrfmiddlewaretoken']").val()
                 let parentId = form.find("[name='isReply']").val()
                 console.log("CSRF: " + csrf_token + "\nTEXT: " + text + "\nPARENDID: " + parentId)
                 $.ajax({
@@ -383,9 +407,9 @@
                         textarea.val('')
                         $("#newcomment").find("div#replyingTo").remove()
                         changeIsReply(0)
-                        
+
                         if(!data.parent_id){
-                            if(data.no_comments == 1) {                            
+                            if(data.no_comments == 1) {
                                 spawnCommentBox(data.id, data.text, data.created_by, avatar)
                             } else if(data.no_comments == 0){
                                 spawnParentComment(data.id, data.text, data.created_by, avatar)
@@ -398,9 +422,9 @@
                             }
                         }
                         reply()
-                    }                   
-                })  
-    
+                    }
+                })
+
             })
         }
 
@@ -409,11 +433,11 @@
                 //e.preventDefault();
                 $(this).find(".fas").toggleClass('fa-caret-square-down')
                 $(this).find(".fas").toggleClass('fa-caret-square-up')
-                //$("#CatIcon").toggleClass('fa-caret-square-down');	
-                //$("#CatIcon").toggleClass('fa-caret-square-up');			
+                //$("#CatIcon").toggleClass('fa-caret-square-down');
+                //$("#CatIcon").toggleClass('fa-caret-square-up');
               });
         }
-    
+
     });
 </script>
 {% endblock javascript %}

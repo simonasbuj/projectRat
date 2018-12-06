@@ -10,8 +10,8 @@
 <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-8">
 
-    <div class="row">  
-        
+    <div class="row">
+
       {% for book in books %}
         <div class="col-sm-6 col-md-4 col-lg-4 d-flex align-items-stretch pb-3">
           <div class="card book text-white bg-mycardbg text-center w-100 ">
@@ -21,31 +21,31 @@
               <!--<a href="project.php?prj=3" class="card-as-button" style="position: absolute;top: 0; left: 0;height: 100%; width: 100%;"></a>-->
               <div class="card-body">
                   <h5 class="card-title"><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h5>
-                  
+
                     <h6 class="card-subtitle mb-2">
                       {% for writer in book.writers.all %}
                         <a href="#" class="text-muted">{{ writer }}</a>
                       {% endfor %}
-                    </h6>                  
+                    </h6>
                   <p class="card-text"><a href="#">{{ book.category.name }}</a></p>
               </div>
               <div class="card-footer">
                 <small class="text-muted"><i class="fas fa-hashtag"></i>
                   {% for booktag in book.booktags_set.all %}
                    <a href="#" class="badge badge-secondary">{{ booktag.tag }}</a>
-                  {% endfor %}                
+                  {% endfor %}
                 </small>
               </div>
           </div>
         </div>
       {% endfor %}
-        
 
 
 
-        
+
+
     </div><!-- /row left -->
-    
+
     <!-- pagination -->
     {% if books.paginator.page_range %}
       <nav aria-label="Page navigation example">
@@ -78,7 +78,7 @@
         </ul>
       </nav><!-- /pagination -->
     {% endif %}
-    
+
 </div> <!-- /column left-->
 
 <div class="col-sm-12 col-lg-4">
@@ -115,8 +115,8 @@
         </div>
       </div>
     </div><!-- /accordionCategories -->
-    
-    
+
+
     <div id="accordion2" class="mt-2">
       <div class="card">
         <div class="card-header pointer" id="Adds" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -133,26 +133,114 @@
         </div>
       </div>
     </div><!-- /accordionAdds -->
-    
+
 </div><!-- /column right -->
 
 </div>
+
+
+
+<!-- register book button -->
+{% if user.is_authenticated %}
+<button id="newWishBtn" type="button" class="btn btn-secondary btn-circle btn-xl" data-toggle='popover' data-trigger='hover' data-content='Užregistruok turimą knygą' data-placement='top' >
+    <i class="fas fa-plus"></i>
+</button>
+{% endif %}
+
+<!-- new book modal -->
+{% if user.is_authenticated %}
+<div class="modal fade" id="newBookModal" tabindex="-1" role="dialog" aria-labelledby="newWishModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content no-radius">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Užregistruok knygą, kurią galėsi paskolinti kitiems</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pb-0">
+                <form action="{% url 'entertainment:addbook' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control"  name="bookName" placeholder="Knygos pavadinimas" onchange="removeInvalid(this)">
+                        <div class="invalid-feedback">
+                            Nebejuokink. Bet kam aišku, kad pavadinimas yra būtinas...
+                        </div>
+                    </div>
+                    <div class="form-group mb-1">
+                        <input type="text" class="form-control"  name="writers" placeholder="Autoriaus vardas ir pavardė" onchange="removeInvalid(this)" autocomplete="off">
+                    </div>
+                    <div class="container px-0" id="writersDiv">
+                    </div>
+                    <div class="form-group py-1" style="overflow: hidden;">
+                        <button type="button" class="btn btn-secondary btn-circle float-right mr-2" id="newWriterBtn" data-toggle='popover' data-trigger='hover' data-content='Pridėti autorių' data-placement='top' >
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="form-group mr-auto">
+                            <input type="text" class="form-control"  name="releaseDate" placeholder="Leidimo metai (nebūtina)">
+                    </div>
+                    <div class="form-group mr-auto">
+                        <input type="text" class="form-control"  name="publisher" placeholder="Leidykla (nebūtina)">
+                    </div>
+                    <div class="form-group mr-auto">
+                        <input type="text" class="form-control"  name="publisher" placeholder="ISBN kodas (nebūtina)">
+                    </div>
+                    <div class="form-group mr-auto">
+                            <textarea class="form-control" rows="5" name="bookDescription" placeholder="Knygos aprašymas (nebūtina)" onchange="removeInvalid(this)"></textarea>
+                            <div class="invalid-feedback">
+                                Aprašymas yra privalomas ir negali būti toks trumpas
+                            </div>
+                    </div>
+                    <div class="form-group mr-auto">
+                        <select class="form-control pointer" name="newBookCategory" onchange="removeInvalid(this)">
+                            <option value="0">Knygos žanras</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" name="newBookCover">
+                     </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary mr-auto">Išsaugoti</button>
+                <button type="button" class="btn btn-secondary " data-dismiss="modal">Atšaukti</button> -->
+                <button type="submit" id="newWishFormBtn" class="btn btn-dark"><i class="fas fa-plus"></i> Registruoti knygą</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
 {% endblock content %}
 
-
 {% block javascript %}
-{{ block.super }}     
+{{ block.super }}
 
 <script>
-    
+$( document ).ready(function() {
+    $('[data-toggle="popover"]').popover(); //kad veiktu popover
+    //addWritter()
+
+
+});
+
     $("#Cat").click(function(e) {
-      $("#CatIcon").toggleClass('fa-caret-square-down');	
+      $("#CatIcon").toggleClass('fa-caret-square-down');
       $("#CatIcon").toggleClass('fa-caret-square-up');
     });
-    
+
       $("#Adds").click(function(e) {
-      $("#AddsIcon").toggleClass('fa-caret-square-down');	
+      $("#AddsIcon").toggleClass('fa-caret-square-down');
       $("#AddsIcon").toggleClass('fa-caret-square-up');
     });
 </script>
+<script src="{% static 'library/js/newBook.js' %}"></script>
 {% endblock javascript %}

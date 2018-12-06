@@ -4,7 +4,7 @@
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{% url 'library:index' %}">Knygnešys</a></li>
 {% endblock breadcrumb %}
-{% block breadcrumbinfo %}Pasiūlyk kokią knygą norėtum išvysti bibliotekoje arba padovanok knygą bibliotekai{% endblock breadcrumbinfo %}
+{% block breadcrumbinfo %}Paprašyk arba padovanok knygą{% endblock breadcrumbinfo %}
 
 {% block content %}
 <div class="row">
@@ -72,7 +72,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content no-radius">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Kokią knygą norėtum išvysti bibliotekoje?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Kokią knygą norėtum gauti dovanų?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -110,6 +110,9 @@
                     </div>
                     <div class="form-group mr-auto">
                         <input type="text" class="form-control"  name="publisher" placeholder="Leidykla (nebūtina)">
+                    </div>
+                    <div class="form-group mr-auto">
+                        <input type="text" class="form-control"  name="publisher" placeholder="ISBN kodas (nebūtina)">
                     </div>
                     <div class="form-group mr-auto">
                             <textarea class="form-control" rows="5" name="newWishComment" placeholder="Kodėl nori šios knygos?&#10;Kuom ji bus naudinga kitiems skaitytojams?" onchange="removeInvalid(this)"></textarea>
@@ -250,7 +253,7 @@
     <div class="alert alert-success alert-dismissible fade show" id="addWishAlert" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="alert-heading">PAVYKO!</h4>
-        <p>Jūsų prašymas buvo užregistruotas sėkmingai ir perduotas bibliotekos darbuotojams. Įvertinus prašymą, bus nustatyta knygos numatoma kaina ir prašymą galėsite išvysti šiame puslapyje.</p>
+        <p>Jūsų prašymas buvo užregistruotas sėkmingai ir perduotas knygų mėgėjų klubo administratoriams. Įvertinus prašymą, bus nustatyta knygos numatoma kaina ir prašymą galėsite išvysti šiame puslapyje.</p>
         <hr>
         <p class="mb-0">Jeigu prašymas nėra korektiškas jis bus pašalintas &#x1F612;</p>
     </div>
@@ -262,7 +265,7 @@
         <h4 class="alert-heading">O VAU!</h4>
         <p>Žiurkė sugraužė laidus! Bandykite sukurti prašymą dar kartą.</p>
         <hr>
-        <p class="mb-0">Jeigu prašymo nepavyksta pridėti ir toliau, informuokite bibliotekos darbuotojus.</p>
+        <p class="mb-0">Jeigu prašymo nepavyksta pridėti ir toliau, informuokite knygų mėgėjų klubo darbuotojus.</p>
     </div>
 {% endif %}
 

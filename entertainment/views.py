@@ -213,3 +213,41 @@ def dislike_book(request):
         return HttpResponse("Ok")
     else:
         return redirect('library:index')
+
+
+def addbook(request):
+    if request.method != "POST" or not request.user.is_authenticated:
+        return redirect('library:index')
+
+    title = request.POST.get('bookName')
+    writers = request.POST.getlist("writers")
+    description = request.POST.get('bookDescription')
+    category = Category.objects.get(id=request.POST.get("newBookCategory"))
+    owner = request.user
+    cover = None if not request.FILES.get('newBookCover') else request.FILES.get('newBookCover')
+
+    book = Book.objects.create(title=title, description=description, category=category, owner=owner, cover=cover)
+
+    for writer in writers:
+        writer_lastname = ""
+        try:
+            writerdb = Writer.objects.get(slug=slugify(writer))
+            wish.writers.add(writerdb)
+        except:
+            writer = writer.split()
+            writer_name = writer[0]
+            for word in writer[1:]:
+                writer_lastname += word + ' '
+            w = Writer.objects.create(name=writer_name, last_name=writer_lastname.strip())
+            book.writers.add(w)
+
+    return redirect('library:index')
+
+def deletebook(request, id):
+    book = get_object_or_404(Book, id=id)
+
+    if book.owner == request.user:
+        book.delete()
+        return redirect('library:index')
+    else:
+        return redirect('library:book_details', slug=book.slug)
