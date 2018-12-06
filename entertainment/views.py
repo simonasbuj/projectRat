@@ -232,7 +232,7 @@ def addbook(request):
         writer_lastname = ""
         try:
             writerdb = Writer.objects.get(slug=slugify(writer))
-            wish.writers.add(writerdb)
+            book.writers.add(writerdb)
         except:
             writer = writer.split()
             writer_name = writer[0]
@@ -240,6 +240,7 @@ def addbook(request):
                 writer_lastname += word + ' '
             w = Writer.objects.create(name=writer_name, last_name=writer_lastname.strip())
             book.writers.add(w)
+
 
     return redirect('library:index')
 
