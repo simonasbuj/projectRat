@@ -5,6 +5,8 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 from datetime import datetime
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
+from datetime import timedelta
+from django.utils import timezone
 
 #ajax
 from django.core import serializers
@@ -57,10 +59,18 @@ def book_details(request, slug):
     similar_books = Book.objects.filter((Q(category=book.category) |  Q(tags__in=book.tags.all())) & ~Q(id = book.id)).distinct()[:24]
     #print(similar_books[4])
     max_num_of_replies = 5
+
+    start_date = timezone.now().date()
+    future_dates = []
+    for single_date in (start_date + timedelta(n) for n in range(14)):
+        future_dates.append(single_date)
+
     context = {
         'book': book,
         'max_num_of_replies': max_num_of_replies,
         'similar_books': similar_books,
+        'start_date': start_date,
+        'future_dates': future_dates,
     }
     return render(request, 'library/book_details.html', context)
 

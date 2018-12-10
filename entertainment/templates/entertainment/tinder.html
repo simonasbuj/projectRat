@@ -38,7 +38,13 @@
                     </button>
                 </div>
                 <div class="modal-body pb-0">
-                    <p>knygos info</p>
+                    <h1>{{ book.title }}</h1>
+                    <h4>Autoriai:</h4>
+                    <h3>{% for writer in book.writers.all %}<a href="#"  class="text-muted">{{ writer }}</a> {% endfor %}</h3>
+                    <h4>Žanras:</h4>
+                    <h3><a href="#"  class="text-muted">{{ book.category }}</a></h3>
+                    <h4>Aprašymas:</h4>
+                    <h6 class="text-muted">{{ book.description|safe|linebreaks}}</h6>
                     <h5 class="mb-0">Šią knygą siūlome jums nes</h5>
                     {% for r in reasons %}
                         <p class="mb-0">{{ r|safe }}</p>

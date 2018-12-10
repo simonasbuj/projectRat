@@ -191,24 +191,35 @@
                     <div class="card">
                       <div class="card-header pointer" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="true" aria-controls="collapseOrder">
                         <h5 class="mb-0">
-                            Pridėti į užsakymą <i class="fas fa-caret-square-up float-right"></i>
+                            Rezervavimas <i class="fas fa-caret-square-up float-right"></i>
                         </h5>
                       </div>
 
                       <div id="collapseOrder" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
+                            {% if book.owner != user %}
                             <form>
                                 <div class="form-group">
-                                    <label for="select_kalba">Išsirinkite kalbą</label>
-                                    <select class="form-control pointer" id="select_kalba" name="select_kalba">
-                                        <option>Lietuvių</option>
-                                        <option>Anglų</option>
-                                        <option>Rusų</option>
-                                        <option>Lenkų</option>
+                                    <label for="select_kalba">Paėmimo data</label>
+                                    <select class="form-control pointer" id="take_date" name="take_date">
+                                        {% for single_date in future_dates %}
+                                            <option value="{{ single_date|date:"Y-m-d" }}">{{ single_date|date:"Y-m-d" }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
-                                <button class="btn btn-dark btn-dark-custom btn-block mt-3 no-radius" type="submit"><i class="fas fa-plus"></i> PRIDĖTI</button>
+                                <div class="form-group">
+                                    <label for="select_kalba">Grąžinimo data</label>
+                                    <select class="form-control pointer" id="return_date" name="return_date">
+                                        {% for single_date in future_dates|slice:"1:" %}
+                                            <option value="{{ single_date|date:"Y-m-d" }}">{{ single_date|date:"Y-m-d" }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <button class="btn btn-dark btn-dark-custom btn-block mt-3 no-radius" type="submit" id="reserveBtn"><i class="fas fa-plus"></i> PRIDĖTI</button>
                             </form>
+                            {% else %}
+                             negali rezervuoti savo knygos
+                            {% endif %}
                         </div>
                       </div>
                     </div>
@@ -262,7 +273,7 @@
                                         </div>
                                         <div class="col-12">
                                             {% if book.owner == user %}
-                                                <a href="{% url 'entertainment:deletebook' id=book.id %}" class="btn btn-dark btn-dark-custom btn-block mt-3 no-radius" type="submit"><i class="fas fa-minus-square"></i> Ištrink savo knygą</a> 
+                                                <a href="{% url 'entertainment:deletebook' id=book.id %}" class="btn btn-dark btn-dark-custom btn-block mt-3 no-radius" type="submit"><i class="fas fa-minus-square"></i> Ištrink savo knygą</a>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -440,4 +451,5 @@
 
     });
 </script>
+<script src="{% static 'library/js/reservation.js' %}"></script>
 {% endblock javascript %}
