@@ -16,7 +16,8 @@
                 <div class="card wish" wish_id="{{ wish.api_url }}">
                     <h5 class="card-header">
                         Liko {{ wish.get_timeleft }} d.
-                        <span class="badge badge-secondary float-right" data-toggle='popover' data-trigger='hover' data-content='Patiko 85 zmonems' data-placement='top'><i class="fas fa-heart"></i> 89</span>
+                        <!--<span class="badge badge-secondary float-right" data-toggle='popover' data-trigger='hover' data-content='Patiko 85 zmonems' data-placement='top'><i class="fas fa-heart"></i> 89</span>
+                        -->
                     </h5>
                     <div class="card-body text-center pb-0">
                       <img src="{{ wish.created_by.info.avatar_url }}" alt="ayoo">
@@ -25,7 +26,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary {% if wish.get_goal_percent < 40 %} text-dark {% endif %}" role="progressbar" style="width: {{ wish.get_goal_percent }}%" aria-valuenow="{{ wish.get_transaction_sum }}" aria-valuemin="0" aria-valuemax="{{ wish.price }}"> {{ wish.get_transaction_sum }}/{{ wish.price }} EUR</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary {% if wish.get_goal_percent < 20 %} text-dark {% endif %}" role="progressbar" style="width: {{ wish.get_goal_percent }}%" aria-valuenow="{{ wish.get_transaction_sum }}" aria-valuemin="0" aria-valuemax="{{ wish.price }}"> {{ wish.get_transaction_sum }}/{{ wish.price }} EUR</div>
                         </div>
                     </div>
                 </div>
@@ -139,7 +140,7 @@
             <div class="modal-content no-radius">
                     <div class="modal-header">
                       <h5 class="modal-title align-middle" id="exampleModalLabel">Liko <span id="timeLeft"></span> d.</h5>
-                      {# <div class="wish-like-btn"><h1 class="mb-0"><i class="fas fa-heart bookmark"></i></h1></div> #}
+                      <!-- <div class="wish-like-btn"><h1 class="mb-0"><i class="fas fa-heart bookmark"></i></h1></div> -->
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           {# <h1 class="mb-0"><i class="fas fa-heart bookmark"></i></h1> #}
                         <span aria-hidden="true">&times;</span>
@@ -155,7 +156,7 @@
                                         </div>
                                         <div class="col-6 align-middle">
 
-                                            <h1 class="mb-0 wish-like-btn"><span class="badge badge-secondary float-right"><i class="fas fa-heart wish-bookmark"></i> 89</span></h1>
+                                            <!--<h1 class="mb-0 wish-like-btn"><span class="badge badge-secondary float-right"><i class="fas fa-heart wish-bookmark"></i> 89</span></h1>-->
                                         </div>
                                     </div>
 

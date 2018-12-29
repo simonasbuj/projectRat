@@ -118,7 +118,7 @@ def tinder(request):
         return redirect('library:index')
 
     #get relevant data, like genres, tags, writers of the books that user read.
-    orders = Order.objects.filter(user = request.user)
+    orders = Order.objects.filter(user = request.user).exclude(status = 'o')
 
     # 1 budas
     # read_books = Book.objects.none()
@@ -147,7 +147,7 @@ def tinder(request):
     similar_users = User.objects.filter(info__birth_date__lt=max_age, info__birth_date__gt=min_age).exclude(id=request.user.id)
 
     # 'su' stands for similar users
-    su_orders = Order.objects.filter(user__in = similar_users)
+    su_orders = Order.objects.filter(user__in = similar_users).exclude(status = 'o')
     su_books = Book.objects.filter(order__in=su_orders).distinct()
     su_categories = Category.objects.filter(book__in=su_books).distinct()
     su_writers = Writer.objects.filter(book__in=su_books).distinct()
@@ -187,6 +187,8 @@ def tinder(request):
     if book in su_books:
         reasons.append('Jūsų bendraamžiai skaitė šią knygą')
 
+
+    random.shuffle(reasons)
     context = {
         'book': book,
         'reasons': reasons

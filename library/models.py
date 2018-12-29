@@ -66,7 +66,7 @@ class Book(models.Model):
             book.cover.delete()
 
     def get_absolute_url(self):
-        return reverse('library:book_details', args=[str(self.slug)])
+        return reverse('library:book_details', args=[str(self.slug), self.id])
 
     def __str__(self):
         return self.title + ' by ' + str(self.writers.all().first())
@@ -156,9 +156,18 @@ class Category(models.Model):
 
 #orders table
 class Order(models.Model):
+    STATUS_CHOICES = (
+        ('o', 'offered'),
+        ('t', 'taken'),
+        ('r', 'reported'),
+        ('s', 'succesful')
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)  #auto_now_add=True
     books = models.ManyToManyField(Book, blank=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='o')
+    take_date = models.DateField(null=True)
+    return_date = models.DateField(null=True)
 
     class Meta:
         db_table = 'orders'
