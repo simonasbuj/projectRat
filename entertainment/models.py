@@ -24,7 +24,7 @@ class Wish(models.Model):
     created_at = models.DateTimeField(default=timezone.now)  #auto_now_add=True
     updated_at = models.DateTimeField(default=timezone.now)
     admin_comment = models.TextField(null=True, blank=True)
-    isbn = models.CharField(max_length=13, null=True)
+    ISBN = models.CharField(max_length=13, null=True)
     book_description = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='n')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)

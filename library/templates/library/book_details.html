@@ -197,7 +197,7 @@
 
                       <div id="collapseOrder" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            {% if book.owner != user %}
+                            {% if book.owner != user and user.is_authenticated %}
                             <form>
                                 <div class="form-group">
                                     <label for="select_kalba">Paėmimo data</label>
@@ -218,7 +218,7 @@
                                 <button class="btn btn-dark btn-dark-custom btn-block mt-3 no-radius" type="submit" id="reserveBtn"><i class="fas fa-plus"></i> PRIDĖTI</button>
                             </form>
                             {% else %}
-                             negali rezervuoti savo knygos
+                             Negalima
                             {% endif %}
                         </div>
                       </div>

@@ -16,6 +16,8 @@ class WishAdmin(admin.ModelAdmin):
         return str(obj.get_transaction_sum) + "/" + str(obj.price)
     accumulation.short_description = "Sukaupta EUR"
 
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
