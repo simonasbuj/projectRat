@@ -17,6 +17,12 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 
 #books table
 class Book(models.Model):
+    LANGUAGE_CHOICES = (
+        ('lt', 'Lietuvių'),
+        ('en', 'Anglų'),
+        ('ru', 'Rusų'),
+        ('pl', 'Lenkų')
+    )
     title = models.CharField(max_length=100)
     cover = models.ImageField(upload_to=book_cover_upload, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -26,6 +32,7 @@ class Book(models.Model):
     tags = models.ManyToManyField('Tag', through="BookTags", blank=True)
     added_at = models.DateTimeField(auto_now_add=True, blank=True, editable=False)
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default='lt')
 
     class Meta:
         db_table = 'books'

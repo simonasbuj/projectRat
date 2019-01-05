@@ -29,8 +29,8 @@
                 <h1>{{ book.title }}</h1>
                 <h4>Autoriai:</h4>
                 <h3>{% for writer in book.writers.all %}<a href="#"  class="text-muted">{{ writer }}</a> {% endfor %}</h3>
-                <h4>Žanras:</h4>
-                <h3><a href="#"  class="text-muted">{{ book.category }}</a></h3>
+                <h4>Žanras: <a href="#"  class="text-muted">{{ book.category }}</a></h4>
+                <h4>Kalba: <a href="#"  class="text-muted">{{ book.get_language_display }}</a></h4>
                 <h4>Aprašymas:</h4>
                 <h6 class="text-muted text-justify">{{ book.description|safe|linebreaks}}</h6>
             </div><!--/book info column-->
@@ -227,7 +227,7 @@
                                         {% for o in orders %}
                                             <div class="card p-2">
                                                 {% if o.status == 'o' %}
-                                                <a class="text-dark font-weight-bold" href="{% url 'accounts:profile' username=book.owner.username %}">{{ o.user }} ({{ o.user.email }} | {{ o.user.info.phone_number }})</a>nori paimti knygą {{ o.take_date|date:"Y-m-d" }} ir grąžinti ją {{ o.return_date|date:"Y-m-d" }}
+                                                <a class="text-dark font-weight-bold" href="{% url 'accounts:profile' username=book.owner.username %}">{{ o.user }} ({{ o.user.email }} | 86{{ o.user.info.phone_number }})</a>nori paimti knygą {{ o.take_date|date:"Y-m-d" }} ir grąžinti ją {{ o.return_date|date:"Y-m-d" }}
                                                 <form action="{% url 'library:reservation_answer' o.id %}" method="POST">{% csrf_token %}
                                                     <div class="row">
                                                         <div class="col-6"><button type="submit" class="btn btn-dark btn-dark-custom btn-block" name="okBtn" value="1">OK</button></div>
@@ -236,11 +236,15 @@
                                                 </form>
                                                 {% elif o.status == 't' %}
                                                     <a class="text-dark font-weight-bold" href="{% url 'accounts:profile' username=o.user.username %}">{{ o.user }} ({{ o.user.email }} | 86{{ o.user.info.phone_number }})</a>paėmė knygą {{ o.take_date|date:"Y-m-d" }} ir grąžins ją {{ o.return_date|date:"Y-m-d" }}
-                                                    <div class="row pt-1">
-                                                        <div class="col-5 pr-1"><button type="submit" class="btn btn-dark btn-dark-custom btn-block" name="returnedBtn" value="1">GRĄŽINO</button></div>
-                                                        <div class="col-5 px-1"><button type="submit" class="btn btn-dark btn-dark-custom btn-block" name="cancelBtn" value="1">ATŠAUKTI</button></div>
-                                                        <div class="col-2 pl-1"><button type="submit" class="btn btn-dark btn-dark-custom btn-block" name="reportBtn" value="1" data-toggle='popover' data-trigger='hover' data-content='Pavogė' data-placement='top'><i class="far fa-angry"></i></button></div>
-                                                    </div>
+                                                    <form action="{% url 'library:reservation_answer' o.id %}" method="POST">{% csrf_token %}
+                                                        <div class="row pt-1">
+                                                            <div class="col-5 pr-1"><button type="submit" class="btn btn-dark btn-dark-custom btn-block" name="returnedBtn" value="1">GRĄŽINO</button></div>
+                                                            <div class="col-5 px-1"><button type="submit" class="btn btn-dark btn-dark-custom btn-block" name="cancelBtn" value="1">ATŠAUKTI</button></div>
+                                                            <div class="col-2 pl-1"><button type="submit" class="btn btn-dark btn-dark-custom btn-block" name="reportBtn" value="1" data-toggle='popover' data-trigger='hover' data-content='Pavogė' data-placement='top'><i class="far fa-angry"></i></button></div>
+                                                        </div>
+                                                    </form>
+                                                {% elif o.status == 'r' %}
+                                                Vyksta tyrimas, bandom susigrąžinti jūsų knygą.
                                                 {% endif %}
                                             </div>
                                         {% empty %}

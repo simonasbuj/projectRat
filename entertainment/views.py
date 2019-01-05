@@ -225,10 +225,11 @@ def addbook(request):
     writers = request.POST.getlist("writers")
     description = request.POST.get('bookDescription')
     category = Category.objects.get(id=request.POST.get("newBookCategory"))
+    language = request.POST.get('newBookLanguage')
     owner = request.user
     cover = None if not request.FILES.get('newBookCover') else request.FILES.get('newBookCover')
 
-    book = Book.objects.create(title=title, description=description, category=category, owner=owner, cover=cover)
+    book = Book.objects.create(title=title, description=description, category=category, owner=owner, language=language, cover=cover)
 
     for writer in writers:
         writer_lastname = ""

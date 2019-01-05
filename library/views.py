@@ -67,11 +67,16 @@ def book_details(request, slug, id):
 
     orders = book.order_set.all().exclude(status='s')
     lb_order = book.order_set.last()
-    lu_order = request.user.order_set.last()
+    lu_order = None
+    if request.user.is_authenticated:
+        lu_order = request.user.order_set.last()
+
     cant_order = ''
-    if lu_order and lu_order.status != 's':
+    if request.user.is_authenticated and lu_order and lu_order.status == 'r':
+        cant_order = 'PRAŠOM GRĄŽINTI KNYGĄ <a class="text-dark font-weight-bold" href="/knyga/' + lu_order.books.last().slug + '-' + str(lu_order.books.last().id) + '">' + lu_order.books.last().title + '</a> (nuo: ' + str(lu_order.take_date) + ' iki: ' + str(lu_order.return_date) + ')'
+    elif request.user.is_authenticated and lu_order and lu_order.status != 's':
         cant_order = 'Jau rezervavai <a class="text-dark font-weight-bold" href="/knyga/' + lu_order.books.last().slug + '-' + str(lu_order.books.last().id) + '">' + lu_order.books.last().title + '</a> (nuo: ' + str(lu_order.take_date) + ' iki: ' + str(lu_order.return_date) + ')'
-    elif lb_order.status == 't' or lb_order.status == 'r':
+    elif lb_order and (lb_order.status == 't' or lb_order.status == 'r'):
         cant_order = 'Knygą rezervavo kitas narys. Ši knyga bus prieinama nuo ' + str(lb_order.return_date)
     context = {
         'book': book,
@@ -132,8 +137,6 @@ def reservation_answer(request, id):
     if request.user != book.owner or request.method != 'POST':
         return redirect('library:index')
 
-    print('ok mygutkas: ' + str(request.POST.get('okBtn')))
-    print('cancel mygtukas: ' + str(request.POST.get('cancelBtn')))
     if request.POST.get('okBtn'):
         order.status = 't'
         order.save()
@@ -143,6 +146,14 @@ def reservation_answer(request, id):
         return redirect('library:book_details', slug=book.slug, id=book.id)
     elif request.POST.get('cancelBtn'):
         order.delete()
+        return redirect('library:book_details', slug=book.slug, id=book.id)
+    elif request.POST.get('returnedBtn'):
+        order.status = 's'
+        order.save()
+        return redirect('library:book_details', slug=book.slug, id=book.id)
+    elif request.POST.get('reportBtn'):
+        order.status = 'r'
+        order.save()
         return redirect('library:book_details', slug=book.slug, id=book.id)
 
     return HttpResponse("neveikia...")
