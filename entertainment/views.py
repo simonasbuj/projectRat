@@ -151,13 +151,24 @@ def tinder(request):
     su_books = Book.objects.filter(order__in=su_orders).distinct()
     su_categories = Category.objects.filter(book__in=su_books).distinct()
     su_writers = Writer.objects.filter(book__in=su_books).distinct()
-    print(su_books)
-    print(su_categories)
-    print(su_writers)
+
+    su_liked_books = Book.objects.none()
+    for u in similar_users:
+        su_liked_books |= u.info.bookmarks.all()
+
+    #pagal pamegtas knygas
+    liked_books = request.user.info.bookmarks.all()
+    lb_categories = Category.objects.filter(book__in=liked_books).distinct()
+    lb_writers = Writer.objects.filter(book__in=liked_books).distinct()
+
+    su_lb_categories = Category.objects.filter(book__in=su_liked_books).distinct()
+    su_lb_writers = Writer.objects.filter(book__in=su_liked_books).distinct()
 
     #monster query ... Q objects, creates a query. '|' means 'or', '&' means 'and' '~' before Q means 'not'
     books = Book.objects.filter((Q(category__in=categories) |  Q(writers__in=writers)
                                 | Q(category__in=su_categories) | Q(writers__in=su_writers) | Q(id__in = su_books)
+                                | Q(category__in=lb_categories) | Q(writers__in=lb_writers)
+                                | Q(category__in=su_lb_categories) | Q(writers__in=su_lb_writers) | Q(id__in = su_liked_books)
                                 )
                                 & ~Q(id__in = read_books)
                                 & ~Q(id__in = request.user.info.bookmarks.all())
@@ -181,11 +192,21 @@ def tinder(request):
         if w in writers:
             reasons.append('Skaitėte kitas <b>' + str(w) + '</b> knygas')
         if w in su_writers:
-            reasons.append('Jūsų bendraamžiai skaito <b>' + str(w) + '</b> knygas')
+            reasons.append('Panašūs lankytojai skaito <b>' + str(w) + '</b> knygas')
+        if w in lb_writers:
+            reasons.append('Jums patiko kitos <b>' + str(w) + '</b> knygos')
+        if w in su_lb_writers:
+            reasons.append('Panašiems lankytojams patiko kitos <b>' + str(w) + '</b> knygos')
     if book.category in su_categories:
-        reasons.append('Jūsų bendraamžiai skaito <b>' + str(book.category) + '</b> žanro knygas')
+        reasons.append('Panašūs lankytojai skaito <b>' + str(book.category) + '</b> žanro knygas')
     if book in su_books:
-        reasons.append('Jūsų bendraamžiai skaitė šią knygą')
+        reasons.append('Panašūs lankytojai skaitė šią knygą')
+    if book.category in lb_categories:
+        reasons.append('Jums patiko kitos <b>' + str(book.category) + '</b> žanro knygos')
+    if book in su_liked_books:
+        reasons.append('Panašiems lankytojams patiko ši knyga')
+    if book.category in su_lb_categories:
+        reasons.append('Panašiems lankytojams patiko kitos <b>' + str(book.category) + '</b> žanro knygos')
 
 
     random.shuffle(reasons)
