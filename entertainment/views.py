@@ -107,7 +107,8 @@ def payment(request):
             wish = wish
         )
 
-        return HttpResponse("OK<br>NORAS: " + str(wish.id) + " " + wish.title + "<br>CHARGE ID: " + response['id'] + "<br>AMOUNT: " + str(float(response['amount']/100)) + " EUR<br>EMAIL: " + email)
+        #return HttpResponse("OK<br>NORAS: " + str(wish.id) + " " + wish.title + "<br>CHARGE ID: " + response['id'] + "<br>AMOUNT: " + str(float(response['amount']/100)) + " EUR<br>EMAIL: " + email)
+        return redirect('entertainment:fundbook')
     else:
         return redirect('entertainment:fundbook')
 

@@ -129,7 +129,7 @@ def reservation(request, slug, id):
 
     new_order = Order.objects.create(user=request.user, take_date=take_date, return_date=return_date)
     new_order.books.add(book)
-    return HttpResponse(str(new_order))
+    return redirect('library:book_details', slug=book.slug, id=book.id)
 
 def reservation_answer(request, id):
     order = get_object_or_404(Order, id=id)
