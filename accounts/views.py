@@ -20,6 +20,19 @@ def settings(request, username):
         user = get_object_or_404(User, username=username)
         # user = User.objects.get(username=username)
         if request.user == user:
+            request.method == "POST"
+            avatar = None if not request.FILES.get('avatar') else request.FILES.get('avatar')
+            birth_date = request.POST.get('birth_date')
+            phone_num = request.POST.get('phone_number')
+            info = Info.objects.get(user=request.user)
+            if request.FILES.get('avatar'):
+                info.avatar = avatar
+            if request.POST.get('birth_date'):
+                info.phone_number = phone_num
+            if request.POST.get('phone_number'):
+                info.birth_date = birth_date
+            info.save()
+
             return render(request, 'accounts/settings.html')
 
     return redirect('library:index')
